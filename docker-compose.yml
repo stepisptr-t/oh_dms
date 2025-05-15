@@ -8,9 +8,9 @@ services:
     # uncomment localtime and timezone if not using NixOS 
     #  - "/etc/localtime:/etc/localtime:ro"
     #  - "/etc/timezone:/etc/timezone:ro"
-      - "./data/openhab/openhab_conf:/openhab/conf"
-      - "./data/openhab/openhab_userdata:/openhab/userdata"
-      - "./data/openhab/openhab_addons_jar:/openhab/addons_jar"
+      - "./data/openhab/conf:/openhab/conf"
+      - "./data/openhab/userdata:/openhab/userdata"
+      - "./data/openhab/addons_jar:/openhab/addons_jar"
     environment:
       CRYPTO_POLICY: "unlimited"
       EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Berlin"

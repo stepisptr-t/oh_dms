@@ -1,2 +1,4 @@
 node_modules
 *.jar
+data/openhab/userdata
+data/openhab/conf

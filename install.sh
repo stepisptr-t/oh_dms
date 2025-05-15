@@ -21,17 +21,17 @@ if [ $? -ne 0 ] ; then
     exit 1
 fi 
 cd ..
-sudo cp -r ./addons/bundles/org.openhab.binding.energymanager/target/org.openhab.binding.energymanager-5.0.0-SNAPSHOT.jar ./data/openhab/openhab_addons_jar/org.openhab.binding.energymanager.jar
+sudo cp -r ./addons/bundles/org.openhab.binding.energymanager/target/org.openhab.binding.energymanager-5.0.0-SNAPSHOT.jar ./data/openhab/addons_jar/org.openhab.binding.energymanager.jar
 
-echo "Waiting for openHAB to start" && sleep 10 && echo "Installing energy manager addon"
+echo "Installing energy manager addon"
 sudo docker exec -t openhab bash -c '/openhab/runtime/bin/client -p habopen -l 0 -- bundle:install file:///openhab/addons_jar/org.openhab.binding.energymanager.jar'
 sudo docker exec -t openhab bash -c '/openhab/runtime/bin/client -p habopen -l 0 -- bundle:restart file:///openhab/addons_jar/org.openhab.binding.energymanager.jar'
 
 # assuming that docker compose up -d has been run already and a .env file is defined in the root
 echo 'Installing config from template'
-sudo cp -r ./data/openhab/template/userdata/jsondb/* ./data/openhab/openhab_userdata/jsondb
-sudo cp -r ./data/openhab/template/conf/* ./data/openhab/openhab_conf
-sudo cp .env ./data/openhab/openhab_conf/things/
+sudo cp -r ./data/openhab/template/userdata/jsondb/* ./data/openhab/userdata/jsondb
+sudo cp -r ./data/openhab/template/conf/* ./data/openhab/conf
+sudo cp .env ./data/openhab/conf/things/
 
 sudo docker exec -it openhab chown -R openhab:openhab /openhab/conf
 
