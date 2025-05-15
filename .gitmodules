@@ -1,3 +1,4 @@
 [submodule "addons"]
 	path = addons
 	url = git@github.com:stepisptr-t/openhab-addons.git
+	branch = energymanager
