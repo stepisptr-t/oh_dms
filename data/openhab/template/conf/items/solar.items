@@ -1,0 +1,224 @@
+Group gSolax "Solax Inverter"
+Group gPrices "Prices"
+Group gPredictions "Predictions"
+Group ShouldBePersistedSolar "Solar items which should be persisted"
+
+Group:Number:SUM gPowerTotal "Spotřeba domácnosti [%d W]" <home> (gSolax, ShouldBePersistedSolar)
+Group:Number:SUM gDayConsumption "Spotřeba dnes [%.2f kWh]" <home> (gSolax, ShouldBePersistedSolar)
+Group:Number:SUM gPowerDC "Výkon panelů [%d W]"  <solarplant> (gSolax, gPowerTotal, ShouldBePersistedSolar)
+
+Number Solax_PowerDC1 "Výkon panelů DC1 [%.0f W]" <solarplant> (gPowerDC)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:PowerDC1:number" }
+Number Solax_PowerDC2 "Výkon panelů DC2 [%.0f W]" <solarplant> (gPowerDC)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:PowerDC2:number" }
+
+Number Solax_BatterySOC "Nabití baterie [%d %%]" <battery> (gSolax, ShouldBePersistedSolar)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:BatterySOC:number" }
+
+Number Solax_BatteryCapacity "Kapacita baterie [%d Wh]" <battery> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:BatteryCapacity:number" }
+
+Number:Energy Solax_ACPower "Aktuální Výkon měniče [%.0f W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:ACPower:number" }
+Number:Energy Solax_HardACPowerLimit "Hard AC Power Limit [%.0f W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters200:HardACPowerLimit:number"
+        // FOR X1 = gain 1 FOR X3 = gain 10
+        [profile="modbus:gainOffset", gain="10"]
+         }
+
+Number Solax_NetworkVoltage "Napětí v síti [%.2f V]" <energy> (gSolax) 
+    { channel="modbus:data:localhostTCP:inputRegisters:NetworkVoltage:number"
+    [profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0"] }
+Number Solax_OutputCurrent "Výstupní proud měniče [%.2f A]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:OutputCurrent:number"
+    [profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0"] }
+Number Solax_PV1Voltage "Napětí panelů PV1 [%.2f V]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:PV1Voltage:number"
+    [profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0"] }
+Number Solax_PV2Voltage "Napětí panelů PV2 [%.2f V]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:PV2Voltage:number"
+    [profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0"] }
+Number Solax_PV1Current "Proud panelů PV1 [%.2f A]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:PV1Current:number"
+    [profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0"] }
+Number Solax_PV2Current "Proud panelů PV2 [%.2f A]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:PV2Current:number"
+    [profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0"] }
+
+Number Solax_TempRadiator "Teplota měniče [%.0f °C]" <temperature> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters100:Temperature:number" }
+
+
+Number Solax_LockSTATE "Zamčený/odemčený stav invertoru [MAP(Solax/Solax_LockSTATE.map):%s]" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:lockStatePoller:LockState:number" }
+Number Solax_Password "Heslo k odemčení invertoru" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters:PasswordLock:number" }
+
+Number Solax_UserPassword "Heslo zadané uživatelem" <settings> (gSolax, ShouldBePersistedSolar)
+Number Solax_ConsumeFromGridToday "Dnešní Spotřeba ze sítě [%.2f kWh]" <energy> (gSolax, gDayConsumption) {
+    channel="modbus:data:localhostTCP:inputRegisters100:consum_energy_today:number" [ 
+        profile="modbus:gainOffset", gain="0.01 kWh", pre-gain-offset="0"
+    ]
+}
+
+Number Solax_EnergyFromGrid "Výkon odebírán ze sítě [%d W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:FeedInPower:number" [
+            profile="transform:JS", 
+            toItemScript="|  input < 0 ? -input : 0"
+    ]
+}
+
+Number Solax_EnergyToGrid "Výkon posílán do sítě [%d W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:FeedInPower:number" [
+            profile="transform:JS", 
+            toItemScript="|  input > 0 ? input : 0"
+    ]
+}
+
+Number Solax_FeedInPowerInverted "Elektřina ++ze/do-- sítě [%d W]" <energy> (gPowerTotal)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:FeedInPower:number" [
+            profile="modbus:gainOffset", gain="-1 W", pre-gain-offset="0"
+    ]
+}
+
+Number Solax_FeedInPower "Elektřina --ze/do++ sítě [%d W]" <energy> (gSolax, ShouldBePersistedSolar)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:FeedInPower:number" }
+Number Solax_FeedInTotal "Feed in total [%d W]" <solarplant> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:FeedInTotal:number"
+    [profile="transform:JS", toItemScript="multiplyBy.js?multiplier=100"] }
+Number Solax_ConsumeTotal "Celková spotřeba ze sítě [%.2f kWh]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:ConsumeTotal:number"
+    [profile="transform:JS", toItemScript="divideBy.js?divisor=100"] }
+Number Solax_EnergyTotal "Celková spotřeba [%.2f kW]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters100:EnergyTotal:number"
+    [profile="transform:JS", toItemScript="divideBy.js?divisor=100"] }
+
+Number Solax_FeedinEnergyToday "Dnešní Dodávka do sítě [%.2f kWh]" <solarplant> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters100:feedin_energy_today:number"
+    [profile="modbus:gainOffset", gain="0.01 kWh", pre-gain-offset="0"]}
+Number Solax_FeedinEnergyTodayInverted "Dnešní Dodávka do sítě [%.2f kWh]" <solarplant> (gSolax, gDayConsumption)
+    { channel="modbus:data:localhostTCP:inputRegisters100:feedin_energy_today:number"
+     [profile="modbus:gainOffset", gain="-0.01 kWh", pre-gain-offset="0"] }
+
+Number Solax_Language "Jazyk" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:Language:number" }
+
+Number Solax_DailyYield "Z FVE a baterií dnes [%.2f kWh]" <solarplant> (gSolax, ShouldBePersistedSolar)
+    { channel="modbus:data:localhostTCP:inputRegisters:DailyYield:number"
+    [profile="modbus:gainOffset", gain="0.1 kWh", pre-gain-offset="0"] }
+Number Solax_SolarEnergyToday "Vyrobeno dnes [%.1f kWh]" <solarplant> (gSolax, gDayConsumption, ShouldBePersistedSolar)
+    { channel="modbus:data:localhostTCP:inputRegisters100:SolarEnergyToday:number"
+    [profile="modbus:gainOffset", gain="0.1 kWh", pre-gain-offset="0"] }
+
+Number Solax_ExportControlUserLimit "Limit přetoků [%.0f W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:Export_Control_User_Limit:number"
+            // pro X1 = gain 1, pro X3 = gain 10 
+        [profile="modbus:gainOffset", gain="10 W", pre-gain-offset="0"]} 
+Number Solax_FactoryExportLimit "Výrobní limit přetoků [%d W]" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:FactoryExportLimit:number" }
+
+Switch Solax_EPS_Mute "EPS Mute" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:EPS_Mute:switch" }
+
+Number Solax_BatteryPowerCharge "Nabíjení++/--Vybíjení Baterie [%.0f W]" <energy> (gSolax)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:BatteryPowerCharge:number" }
+
+Number Solax_BatteryPowerChargeInverted "Nabíjení++/--Vybíjení Baterie [%.0f W]" <energy> (gPowerTotal)
+    { channel="modbus:data:localhostTCP:importantInputRegisters:BatteryPowerCharge:number" 
+       [ profile="modbus:gainOffset", gain="-1 W", pre-gain-offset="0" ]
+    }
+
+Number Solax_BatteryTemp "Teplota baterie [%.0f °C]" <temperature> (gSolax) 
+    { channel="modbus:data:localhostTCP:inputRegisters:BatteryTemp:number" }
+Number Solax_SelfUseMinSOC "Minimální nabití baterie [%.0f %%]" <battery> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:SelfUseMinSOC:number" }
+Number Solax_MaxSOC "Maximální nabití baterie [%.0f %%]" <battery> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters200:MaxSOC:number" }
+
+Number Solax_BatteryOutputEnergyToday "Dnešní výdej baterie [%.2f kWh ]" <energy> (gSolax, gDayConsumption)  
+    { channel="modbus:data:localhostTCP:inputRegisters:BatteryOutputEnergyToday:number" 
+    [profile="modbus:gainOffset", gain="0.1 kWh", pre-gain-offset="0"] }
+Number Solax_BatteryInputEnergyToday "Dnešní nabití baterie [%.2f kWh ]" <energy> (gSolax)  
+    { channel="modbus:data:localhostTCP:inputRegisters:BatteryInputEnergyToday:number" 
+    [profile="modbus:gainOffset", gain="0.1 kWh", pre-gain-offset="0"] }
+Number Solax_BatteryInputEnergyTodayInverted "Invertovaná hodnota dnešního nabití baterie [%.2f kWh ]" <energy> (gSolax, gDayConsumption)  
+    { channel="modbus:data:localhostTCP:inputRegisters:BatteryInputEnergyToday:number" 
+    [profile="modbus:gainOffset", gain="-0.1 kWh", pre-gain-offset="0"] }
+
+Group:Number:AVG gSystemVoltageAvg "Napětí procházející fázemi [%.0f V]" <energy> (gSolax)
+Group:Number:SUM gSystemCurrentSum "Suma proudu procházejícího fázemi [%.0f A]" <energy> (gSolax)
+Group:Number:SUM gSystemPowerSum "Suma zátěží na všech fázích [%.0f W]" <energy> (gSolax)
+Group:Number:AVG gSystemPowerAvg "Průměrná zátež na všech fázích [%.0f W]" <energy> (gSolax)
+
+Number Solax_SystemVoltage_R1 "Napětí 1.Fáze [%.1f V]" <energy> (gSystemVoltageAvg) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemVoltage_R1:number" 
+    [ profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0" ] }
+Number Solax_SystemCurrent_R1 "Proud 1.Fáze [%.1f A]" <energy> (gSystemCurrentSum) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemCurrent_R1:number" 
+    [ profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0" ] }
+Number Solax_SystemPower_R1 "Spotřeba 1. Fáze [%.0f W]" <energy> (gSystemPowerSum) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemPower_R1:number" }
+
+Number Solax_SystemVoltage_S2 "Napětí 2.Fáze [%.1f V]" <energy> (gSystemVoltageAvg) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemVoltage_S2:number" 
+    [ profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0" ] }
+Number Solax_SystemCurrent_S2 "Proud 2.Fáze [%.1f A]" <energy> (gSystemCurrentSum) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemCurrent_S2:number" 
+    [ profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0" ] }
+Number Solax_SystemPower_S2 "Spotřeba 2. Fáze [%.0f W]" <energy> (gSystemPowerSum) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemPower_S2:number" }
+
+Number Solax_SystemVoltage_T3 "Napětí 3.Fáze [%.1f V]" <energy> (gSystemVoltageAvg) 
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemVoltage_T3:number" 
+    [ profile="modbus:gainOffset", gain="0.1 V", pre-gain-offset="0" ] }
+Number Solax_SystemCurrent_T3 "Proud 3.Fáze [%.1f A]" <energy> (gSystemCurrentSum)
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemCurrent_T3:number" 
+    [ profile="modbus:gainOffset", gain="0.1 A", pre-gain-offset="0" ] }
+Number Solax_SystemPower_T3 "Spotřeba 3. Fáze [%.0f W]" <energy> (gSystemPowerSum)
+    { channel="modbus:data:localhostTCP:inputRegisters100:SystemPower_T3:number" }
+
+Number Solax_RunMODE "Provozní režim [MAP(Solax/Solax_RunMODE.map):%s]" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:inputRegisters:RunMODE:number" }
+Number Solax_InverterUseMode  "Mód měniče [MAP(Solax/Solax_UseMODE.map):%s]" <settings> (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:InverterUseMode:number" }
+Number Solax_ManualModeState "Working Mode [MAP(Solax/Solax_ManualMODE.map):%s]" <settings>  (gSolax)
+    { channel="modbus:data:localhostTCP:holdingRegisters100:ManualMode:number" }
+
+Number Solax_BatteryToEVEnabled "Battery to grid enabled [MAP(Solax/Solax_ESS2EVMODE.map):%s]" <settings> (gHome)
+    { channel="modbus:data:localhostTCP:holdingRegisters200:BatteryToEVEnabled:number" }
+
+
+Number MBPowerControlMode "Mód krátkodobé manuální správy střídače" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:ControlMode:number"}
+Number MBTargetSOC "Cílové SOC krátkodobé manuální správy střídače" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:TargetSOC:number"}
+Number MBTargetEnergy "Cílový energie krátkodobé manuální správy střídače [%d Wh]" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:TargetEnergy:number"}
+Number MBTargetChargeDischargePower "Cílový výkon krátkodobé manuální správy střídače [%d W]" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:TargetChargeDischargePower:number"}
+Number MBTargetChargeDischargePowerDuration "Čas trvání módu vybíjení/nabíjení podle cílového výkonu manuální správy střídače [%d W]" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:PowerControlTimeOfDuration:number"}
+Number MBRemoteControlTimeout "Čas trvání krátkodobé manuální správy střídače [%d W]" <settings> (gSolax)
+    { channel= "modbus:data:localhostTCP:PowerControlFC16:TargetChargeDischargePower:number"}
+
+Switch Solax_LockSwitch "Rule switch" <settings> (gSolax)
+
+Number FirmwareMinor "Firmware minor version" <settings> (gSolax)
+    {channel="modbus:data:localhostTCP:holdingRegisters100:FirmwareMinor:number"}
+Number FirmwareMajor "Firmware major version" <settings> (gSolax)
+    {channel="modbus:data:localhostTCP:holdingRegisters100:FirmwareMajor:number"}
+
+String FirmwareVersion "Firmware Version" <settings> (gSolax) {
+    channel="modbus:data:localhostTCP:holdingRegisters100:FirmwareMinor:number" [
+        profile="transform:JS", 
+        toItemScript="|  items.FirmwareMajor.state + '.' + input"
+    ]
+}
+
+Number FeedInLimit "15 minute limit of feedin energy" <settings> (gSolax)
+
+Number PanelArea "Area of panels [%.1f m2]" <settings> (gSolax)
+
+// determined by length of days
+Number PanelEfficiency "Efficiency of panels [%.1f %%]" <settings> (gSolax)
+Number UserDefinedSolarPredictionCoefficient "User defined predicted solar production coeficient [%.1f]" <settings> (gSolax)

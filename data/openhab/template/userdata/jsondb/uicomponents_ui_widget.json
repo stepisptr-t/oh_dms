@@ -1,0 +1,1803 @@
+{
+  "SMA_widget": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "SMA_widget",
+      "tags": [],
+      "props": {
+        "parameters": [
+          {
+            "context": "item",
+            "label": "Energy to grid",
+            "name": "gridfeedin",
+            "required": true,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "label": "Energy from grid",
+            "name": "fromgrid",
+            "required": true,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "label": "Total consumption",
+            "name": "consumetotal",
+            "required": true,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "label": "PV power",
+            "name": "pv_power",
+            "required": true,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "label": "Power from battery",
+            "name": "batterypower",
+            "required": true,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "label": "Batterie SOC",
+            "name": "batterylevel",
+            "required": true,
+            "type": "TEXT"
+          }
+        ],
+        "parameterGroups": []
+      },
+      "timestamp": "Feb 5, 2025, 1:38:19 PM",
+      "component": "f7-card",
+      "config": {
+        "class": [
+          "display-flex",
+          "flex-direction-column",
+          "align-items-center"
+        ],
+        "style": {
+          "height": "383px"
+        }
+      },
+      "slots": {
+        "content": [
+          {
+            "component": "f7-block",
+            "config": {
+              "style": {
+                "--f7-theme-color": "var(--f7-text-color)",
+                "display": "flex",
+                "justify-content": "space-between",
+                "padding": 0.0
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "f7-col",
+                  "config": {
+                    "style": {
+                      "align-items": "center",
+                      "display": "flex",
+                      "flex-direction": "row"
+                    }
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "f7-block",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column",
+                            "height": "110px",
+                            "justify-content": "center",
+                            "margin-top": 0.0,
+                            "width": "110px"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-icon",
+                              "config": {
+                                "height": "110px",
+                                "icon": "sma_grid_2"
+                              }
+                            },
+                            {
+                              "component": "Label",
+                              "config": {
+                                "style": {
+                                  "color": "red",
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "margin-top": "-10px",
+                                  "text-align": "center",
+                                  "width": "100px"
+                                },
+                                "text": "\u003ditems[props.fromgrid].displayState",
+                                "visible": "\u003d(Number.parseFloat(items[props.fromgrid].state.split(\" \")[0]) \u003c 0) ? true : false"
+                              }
+                            },
+                            {
+                              "component": "Label",
+                              "config": {
+                                "style": {
+                                  "color": "green",
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "margin-top": "-10px",
+                                  "text-align": "center",
+                                  "width": "100px"
+                                },
+                                "text": "\u003ditems[props.gridfeedin].displayState",
+                                "visible": "\u003d(Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) \u003e 0 || Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) \u003d\u003d 0) ? true : false"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "f7-col",
+                  "config": {
+                    "style": {
+                      "align-items": "center",
+                      "display": "flex",
+                      "flex-direction": "column",
+                      "flex-grow": 1.0
+                    }
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "f7-block",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column",
+                            "height": "110px",
+                            "justify-content": "center",
+                            "margin-top": 0.0,
+                            "width": "110px"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "Label",
+                              "config": {
+                                "style": {
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "text-align": "center",
+                                  "width": "100px"
+                                },
+                                "text": "\u003ditems[props.pv_power].displayState"
+                              }
+                            },
+                            {
+                              "component": "oh-icon",
+                              "config": {
+                                "height": "110px",
+                                "icon": "sma_pv_2",
+                                "style": {
+                                  "margin-top": "-20px"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-block",
+                        "config": {
+                          "style": {
+                            "display": "flex",
+                            "justify-content": "center",
+                            "margin": 0.0,
+                            "padding": 0.0,
+                            "width": "100%"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "f7-row",
+                              "config": {
+                                "preserveAspectRatio": "xMidYMid slice",
+                                "style": {
+                                  "height": "auto",
+                                  "width": "auto"
+                                },
+                                "tag": "svg",
+                                "viewBox": "0 0 100 100",
+                                "xmlns": "http://www.w3.org/2000/svg"
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "d": "M60 -5 v10 c0 30 10 35 30 35 h20",
+                                      "fill": "none",
+                                      "id": "path1",
+                                      "stroke": "rgba(100, 150, 200, 0.8)",
+                                      "stroke-width": 2.0,
+                                      "tag": "path",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) \u003e 0) ? true : false"
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "fill": "rgba(100, 150, 200, 0.8)",
+                                      "r": 6.0,
+                                      "style": {
+                                        "stroke-width": 4.0
+                                      },
+                                      "tag": "circle",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) \u003e 0) ? true : false"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "f7-row",
+                                          "config": {
+                                            "calcMode": "linear",
+                                            "dur": "4s",
+                                            "repeatCount": "indefinite",
+                                            "tag": "animateMotion"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "f7-row",
+                                                "config": {
+                                                  "tag": "mpath",
+                                                  "xlink:href": "#path1"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "d": "M40 -5 v10 c0 40 -10 35 -30 35 h-20",
+                                      "fill": "none",
+                                      "id": "path2",
+                                      "stroke": "rgba(100, 150, 200, 0.8)",
+                                      "stroke-width": 2.0,
+                                      "tag": "path",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) \u003e 0 \u0026\u0026 Number.parseFloat(items[props.fromgrid].state.split(\" \")[0]) \u003d\u003d 0) ? true : false"
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "fill": "rgba(100, 150, 200, 0.8)",
+                                      "r": 6.0,
+                                      "strokeWidth": 10.0,
+                                      "tag": "circle",
+                                      "vectorEffect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) \u003e 0 \u0026\u0026 Number.parseFloat(items[props.fromgrid].state.split(\" \")[0]) \u003d\u003d 0) ? true : false"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "f7-row",
+                                          "config": {
+                                            "calcMode": "linear",
+                                            "dur": "4s",
+                                            "repeatCount": "indefinite",
+                                            "tag": "animateMotion"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "f7-row",
+                                                "config": {
+                                                  "tag": "mpath",
+                                                  "xlink:href": "#path2"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "d": "M50, 0 v100",
+                                      "fill": "none",
+                                      "id": "path3",
+                                      "stroke": "rgba(100, 150, 200, 0.8)",
+                                      "stroke-width": 2.0,
+                                      "tag": "path",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.pv_power].state.split(\" \")[0]) - (Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) + Math.abs(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]))) \u003e 0) ? true : false"
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "fill": "rgba(100, 150, 200, 0.8)",
+                                      "r": 6.0,
+                                      "strokeWidth": 10.0,
+                                      "tag": "circle",
+                                      "vectorEffect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.pv_power].state.split(\" \")[0]) - (Number.parseFloat(items[props.gridfeedin].state.split(\" \")[0]) + Math.abs(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]))) \u003e 0) ? true : false"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "f7-row",
+                                          "config": {
+                                            "calcMode": "linear",
+                                            "dur": "4s",
+                                            "repeatCount": "indefinite",
+                                            "tag": "animateMotion"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "f7-row",
+                                                "config": {
+                                                  "tag": "mpath",
+                                                  "xlink:href": "#path3"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "d": "M-5 50 l10 0 c40 0 35 10 35 50 l 0 20",
+                                      "fill": "none",
+                                      "id": "path4",
+                                      "stroke": "rgba(100, 150, 200, 0.8)",
+                                      "stroke-width": 2.0,
+                                      "tag": "path",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.fromgrid].state.split(\" \")[0]) \u003c\u003d 0) ? true : false"
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "fill": "rgba(100, 150, 200, 0.8)",
+                                      "r": 6.0,
+                                      "strokeWidth": 10.0,
+                                      "tag": "circle",
+                                      "vectorEffect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.fromgrid].state.split(\" \")[0]) \u003c\u003d 0) ? true : false"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "f7-row",
+                                          "config": {
+                                            "calcMode": "linear",
+                                            "dur": "4s",
+                                            "repeatCount": "indefinite",
+                                            "tag": "animateMotion"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "f7-row",
+                                                "config": {
+                                                  "tag": "mpath",
+                                                  "xlink:href": "#path4"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "d": "M 105 50 l -10 0 c -40 0 -35 10 -35 50 l 0 20",
+                                      "fill": "none",
+                                      "id": "path5",
+                                      "stroke": "rgba(100, 150, 200, 0.8)",
+                                      "stroke-width": 2.0,
+                                      "tag": "path",
+                                      "vector-effect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) \u003e 0) ? true : false"
+                                    }
+                                  },
+                                  {
+                                    "component": "f7-row",
+                                    "config": {
+                                      "fill": "rgba(100, 150, 200, 0.8)",
+                                      "r": 6.0,
+                                      "strokeWidth": 10.0,
+                                      "tag": "circle",
+                                      "vectorEffect": "non-scaling-stroke",
+                                      "visible": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) \u003e 0) ? true : false"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "f7-row",
+                                          "config": {
+                                            "calcMode": "linear",
+                                            "dur": "4s",
+                                            "repeatCount": "indefinite",
+                                            "tag": "animateMotion"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "f7-row",
+                                                "config": {
+                                                  "tag": "mpath",
+                                                  "xlink:href": "#path5"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-block",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column",
+                            "height": "110px",
+                            "justify-content": "center",
+                            "margin-top": "-10px",
+                            "width": "110px"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-icon",
+                              "config": {
+                                "color": "orange",
+                                "height": "110px",
+                                "icon": "sma_consumption_2"
+                              }
+                            },
+                            {
+                              "component": "Label",
+                              "config": {
+                                "style": {
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "margin-top": "-10px",
+                                  "text-align": "center",
+                                  "width": "100px"
+                                },
+                                "text": "\u003ditems[props.consumetotal].displayState"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "f7-col",
+                  "config": {
+                    "style": {
+                      "align-items": "center",
+                      "display": "flex",
+                      "flex-direction": "row"
+                    }
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "f7-block",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column",
+                            "height": "110px",
+                            "justify-content": "center",
+                            "margin-top": "-40px",
+                            "width": "110px"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-link",
+                              "config": {
+                                "iconColor": "red",
+                                "iconF7": "battery_0",
+                                "iconSize": "33px",
+                                "style": {
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "white-space": "nowrap"
+                                },
+                                "text": "\u003ditems[props.batterylevel].state",
+                                "visible": "\u003d(Number.parseFloat(items[props.batterylevel].state.split(\" \")[0]) \u003c 10) ? true : false"
+                              }
+                            },
+                            {
+                              "component": "oh-link",
+                              "config": {
+                                "iconColor": "orange",
+                                "iconF7": "battery_25",
+                                "iconSize": "33px",
+                                "style": {
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "white-space": "nowrap"
+                                },
+                                "text": "\u003ditems[props.batterylevel].state",
+                                "visible": "\u003d(Number.parseFloat(items[props.batterylevel].state.split(\" \")[0]) \u003e\u003d 10 \u0026\u0026 Number.parseFloat(items[props.batterylevel].state.split(\" \")[0]) \u003c 75) ? true : false"
+                              }
+                            },
+                            {
+                              "component": "oh-link",
+                              "config": {
+                                "iconColor": "green",
+                                "iconF7": "battery_100",
+                                "iconSize": "33px",
+                                "style": {
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "white-space": "nowrap"
+                                },
+                                "text": "\u003ditems[props.batterylevel].state",
+                                "visible": "\u003d(Number.parseFloat(items[props.batterylevel].state.split(\" \")[0]) \u003e\u003d 75) ? true : false"
+                              }
+                            },
+                            {
+                              "component": "oh-icon",
+                              "config": {
+                                "height": "110px",
+                                "icon": "sma_battery_2",
+                                "style": {
+                                  "margin-top": "-20px"
+                                }
+                              }
+                            },
+                            {
+                              "component": "Label",
+                              "config": {
+                                "style": {
+                                  "color": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) \u003c 0) ? \"red\" : \"green\"",
+                                  "font-size": "25px",
+                                  "font-weight": "bold",
+                                  "margin-top": "-10px",
+                                  "text-align": "center",
+                                  "white-space": "nowrap",
+                                  "width": "100px"
+                                },
+                                "text": "\u003dMath.abs(Number.parseFloat(items[props.batterypower].state.split(\" \")[0])) + \u0027 ᵂ\u0027",
+                                "visible": "\u003d(Number.parseFloat(items[props.batterypower].state.split(\" \")[0]) !\u003d\u003d 0) ? true : false"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Sun2000_Widget": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "Sun2000_Widget",
+      "tags": [
+        "Für Huawei Sun2000 Wechselrichter gem. https://www.debacher.de/wiki/Huawei_Sun2000_mit_OpenHAB",
+        "Version 0.2",
+        "marketplace:154675"
+      ],
+      "props": {
+        "parameters": [
+          {
+            "description": "Widget Titel",
+            "label": "Widget Title",
+            "name": "title",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "String1 Spannung (32016)",
+            "label": "PV1 Voltage",
+            "name": "item32016",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "String1 Strom (32017)",
+            "label": "PV1 current",
+            "name": "item32017",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "String2 Spannung (32018)",
+            "label": "PV2 Voltage",
+            "name": "item32018",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "String2 Strom (32019)",
+            "label": "PV2 current",
+            "name": "item32019",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Solar Ertrag (32064)",
+            "label": "Solar Production",
+            "name": "item32064",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Maximaler Ertrag (32078)",
+            "label": "Peak active today",
+            "name": "item32078",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Leistung der Module (32080)",
+            "label": "Active Power",
+            "name": "item32080",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Netz-Frequenz (32085)",
+            "label": "Grid frequency",
+            "name": "item32085",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Inverter Temperatur (32087)",
+            "label": "Inverter Temperature",
+            "name": "item32087",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Erzeugte Energie (32106)",
+            "label": "Acc. energy yield",
+            "name": "item32106",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Heutiger Solar Ertrag (32114)",
+            "label": "Solar Daily Production",
+            "name": "item32114",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Batterie Temperatur (37022)",
+            "label": "Battery Temperature",
+            "name": "item37022",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Einspeisung/Bezug vom Netz (37113)",
+            "label": "Active power",
+            "name": "item37113",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Gesamt-Einspeisung Netz (37119)",
+            "label": "Positive active electricity",
+            "name": "item37119",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Gesamt-Bezug Netz (37121)",
+            "label": "Reverse active power",
+            "name": "item37121",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Batterie Ladung (37760)",
+            "label": "Battery SOC",
+            "name": "item37760",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Verbrauch/Einspeisung Batterie (37765)",
+            "label": "Charge/ Discharge power",
+            "name": "item37765",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Heutige Einspeisung Batterie (37784)",
+            "label": "Daily Battery Charge",
+            "name": "item37784",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Heutiger Verbrauch von Batterie (37786)",
+            "label": "Daily Battery Consumption",
+            "name": "item37786",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Heutiger Netz-Bezug",
+            "label": "Daily Consumption From Grid",
+            "name": "itemDailyConsumptionFromGrid",
+            "required": false,
+            "type": "TEXT"
+          },
+          {
+            "context": "item",
+            "description": "Heutige Netz-Einspeisung",
+            "label": "Daily Production To Grid",
+            "name": "itemDailyProductionToGrid",
+            "required": false,
+            "type": "TEXT"
+          }
+        ],
+        "parameterGroups": []
+      },
+      "timestamp": "Feb 8, 2025, 7:21:19 PM",
+      "component": "f7-card",
+      "config": {
+        "title": "\u003d props.title"
+      },
+      "slots": {
+        "content": [
+          {
+            "component": "f7-block",
+            "config": {
+              "style": {
+                "margin": 0.0,
+                "padding": 0.0
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "f7-block",
+                  "config": {
+                    "style": {
+                      "--f7-block-font-size": "12px",
+                      "--f7-theme-color": "var(--f7-text-color)",
+                      "display": "flex",
+                      "justify-content": "center",
+                      "margin": 0.0,
+                      "padding": 0.0
+                    }
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "f7-col",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "border": "3px solid orange",
+                                  "border-radius": "20px",
+                                  "display": "flex",
+                                  "flex-direction": "column",
+                                  "height": "100px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "popoverOpen": "\u003d\"#info-solar\""
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "oh-icon",
+                                          "config": {
+                                            "color": "orange",
+                                            "height": "50px",
+                                            "icon": "if:game-icons:solar-power"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "iconColor": "green",
+                                      "iconF7": "arrow_right",
+                                      "iconSize": "12px",
+                                      "popoverOpen": "\u003d\"#info-solar\"",
+                                      "style": {
+                                        "font-size": "14px",
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003ditems[props.item32064].state+\" kW\""
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "flex-direction": "column",
+                                  "height": "70px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              }
+                            },
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "border": "3px solid teal",
+                                  "border-radius": "20px",
+                                  "display": "flex",
+                                  "flex-direction": "column",
+                                  "height": "100px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "Label",
+                                    "config": {
+                                      "style": {
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003ditems[props.item37760].displayState+\" %\""
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "align-item": "center",
+                                      "popoverOpen": "\u003d\"#info-batt\""
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "oh-icon",
+                                          "config": {
+                                            "height": "40px",
+                                            "icon": "battery",
+                                            "state": "\u003ditems[props.item37760].displayState"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "iconColor": "\u003d(Number.parseFloat(items[props.item37765].state) \u003c 0) ? \u0027red\u0027 : \u0027green\u0027",
+                                      "iconF7": "\u003d(Number.parseFloat(items[props.item37765].state) \u003c 0) ? \u0027arrow_right\u0027 : \u0027arrow_left\u0027",
+                                      "iconSize": "12px",
+                                      "popoverOpen": "\u003d\"#info-batt\"",
+                                      "style": {
+                                        "font-size": "14px",
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003d items[props.item37765].state+\" kW\""
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-col",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "svg",
+                              "config": {
+                                "style": {
+                                  "height": "270px",
+                                  "width": "20px"
+                                },
+                                "xmlns": "http://www.w3.org/2000/svg"
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "path",
+                                    "config": {
+                                      "d": "M0,65 h2 q8,0 8,35 t8,35 h2",
+                                      "fill": "none",
+                                      "id": "solarpath",
+                                      "stroke": "orange",
+                                      "stroke-width": 2.0
+                                    }
+                                  },
+                                  {
+                                    "component": "circle",
+                                    "config": {
+                                      "fill": "orange",
+                                      "r": 4.0,
+                                      "style": {
+                                        "stroke-width": 4.0
+                                      },
+                                      "visible": "\u003d(Math.abs(Number.parseFloat(items[props.item32064].state)) \u003c 0.01) ? false : true"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "animateMotion",
+                                          "config": {
+                                            "dur": "\u003d(Number.parseFloat(items[props.item32064].state) \u003e 8) ? \u00271s\u0027 :\n (Number.parseFloat(items[props.item32064].state) \u003e 4) ? \u00272s\u0027 :\n (Number.parseFloat(items[props.item32064].state) \u003e 2) ? \u00273s\u0027 :\n (Number.parseFloat(items[props.item32064].state) \u003e 1) ? \u00274s\u0027 :\n (Number.parseFloat(items[props.item32064].state) \u003e 0.5) ? \u00276s\u0027 :\n (Number.parseFloat(items[props.item32064].state) \u003e 0.1) ? \u00278s\u0027 :\u002716s\u0027",
+                                            "keyPoints": "\u003d(Number.parseFloat(items[props.item32064].state) \u003c 0) ? \u00271;0\u0027 : \u00270;1\u0027",
+                                            "keyTimes": "0;1",
+                                            "repeatCount": "indefinite"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "mpath",
+                                                "config": {
+                                                  "xlink:href": "#solarpath"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "path",
+                                    "config": {
+                                      "d": "M0,230 h2 q8,0 8,-35 t8,-35 h2",
+                                      "fill": "none",
+                                      "id": "batterypath",
+                                      "stroke": "teal",
+                                      "stroke-width": 2.0
+                                    }
+                                  },
+                                  {
+                                    "component": "circle",
+                                    "config": {
+                                      "fill": "teal",
+                                      "r": 4.0,
+                                      "style": {
+                                        "stroke-width": 4.0
+                                      },
+                                      "visible": "\u003d(Number.parseFloat(items[props.item37765].state) \u003d\u003d 0) ? false : true"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "animateMotion",
+                                          "config": {
+                                            "dur": "\u003d(Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 8) ? \u00271s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 4) ? \u00272s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 2) ? \u00273s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 1) ? \u00274s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 0.5) ? \u00276s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37765].state)) \u003e 0.1) ? \u00278s\u0027 :\u002716s\u0027",
+                                            "keyPoints": "\u003d(Number.parseFloat(items[props.item37765].state) \u003e 0) ? \u00271;0\u0027 : \u00270;1\u0027",
+                                            "keyTimes": "0;1",
+                                            "repeatCount": "indefinite"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "mpath",
+                                                "config": {
+                                                  "xlink:href": "#batterypath"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-col",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "flex-direction": "column",
+                                  "height": "82px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              }
+                            },
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "border": "2px solid green",
+                                  "border-radius": "20px",
+                                  "display": "flex",
+                                  "flex-direction": "column",
+                                  "height": "100px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "popoverOpen": "\u003d\"#info-inverter\""
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "oh-icon",
+                                          "config": {
+                                            "color": "lightgreen",
+                                            "height": "50px",
+                                            "icon": "if:cbi:huawei-solar-inverter"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "iconColor": "green",
+                                      "iconF7": "arrow_right",
+                                      "iconSize": "12px",
+                                      "popoverOpen": "\u003d\"#info-inverter\"",
+                                      "style": {
+                                        "font-size": "14px",
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003ditems[props.item32080].state+\" kW\""
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-col",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "svg",
+                              "config": {
+                                "preserveAspectRatio": "xMidYMid slice",
+                                "style": {
+                                  "height": "270px",
+                                  "width": "20px"
+                                },
+                                "xmlns": "http://www.w3.org/2000/svg"
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "path",
+                                    "config": {
+                                      "d": "M20,65 h-2 q-8,0 -8,35 t-8,35 h-2",
+                                      "fill": "none",
+                                      "id": "gridpath",
+                                      "stroke": "darkred",
+                                      "stroke-width": 2.0
+                                    }
+                                  },
+                                  {
+                                    "component": "circle",
+                                    "config": {
+                                      "fill": "darkred",
+                                      "r": 4.0,
+                                      "style": {
+                                        "stroke-width": 4.0
+                                      },
+                                      "tag": "circle",
+                                      "visible": "\u003d(Math.abs(Number.parseFloat(items[props.item37113].state)) \u003c 0.01) ? false : true"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "animateMotion",
+                                          "config": {
+                                            "dur": "\u003d(Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 8) ? \u00271s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 4) ? \u00272s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 2) ? \u00273s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 1) ? \u00274s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 0.5) ? \u00276s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item37113].state)) \u003e 0.1) ? \u00278s\u0027 :\u002716s\u0027",
+                                            "keyPoints": "\u003d(Number.parseFloat(items[props.item37113].state) \u003e 0) ? \u00271;0\u0027 : \u00270;1\u0027",
+                                            "keyTimes": "0;1",
+                                            "repeatCount": "indefinite"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "mpath",
+                                                "config": {
+                                                  "xlink:href": "#gridpath"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "path",
+                                    "config": {
+                                      "d": "M20,230 h-2 q-8,0 -8,-35 t-8,-35 h-2",
+                                      "fill": "none",
+                                      "id": "loadpath",
+                                      "stroke": "blue",
+                                      "stroke-width": 2.0
+                                    }
+                                  },
+                                  {
+                                    "component": "circle",
+                                    "config": {
+                                      "fill": "blue",
+                                      "r": 4.0,
+                                      "style": {
+                                        "stroke-width": 4.0
+                                      },
+                                      "tag": "circle",
+                                      "visible": "\u003d(Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003c\u003d 0.01) ? false : true"
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "animateMotion",
+                                          "config": {
+                                            "dur": "\u003d(Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 8) ? \u00271s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 4) ? \u00272s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 2) ? \u00273s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 1) ? \u00274s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 0.5) ? \u00276s\u0027 :\n (Math.abs(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 0.1) ? \u00278s\u0027 :\u002716s\u0027",
+                                            "keyPoints": "\u003d(Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state) \u003e 0) ? \u00271;0\u0027 : \u00270;1\u0027",
+                                            "keyTimes": "0;1",
+                                            "repeatCount": "indefinite"
+                                          },
+                                          "slots": {
+                                            "default": [
+                                              {
+                                                "component": "mpath",
+                                                "config": {
+                                                  "xlink:href": "#loadpath"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "f7-col",
+                        "config": {
+                          "style": {
+                            "align-items": "center",
+                            "display": "flex",
+                            "flex-direction": "column"
+                          }
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "border": "3px solid darkred",
+                                  "border-radius": "20px",
+                                  "display": "flex",
+                                  "flex-direction": "column",
+                                  "height": "100px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "popoverOpen": "\u003d\"#info-grid\""
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "oh-icon",
+                                          "config": {
+                                            "color": "darkred",
+                                            "height": "50px",
+                                            "icon": "if:mdi:transmission-tower"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "iconColor": "\u003d(Number.parseFloat(items[props.item37113].state) \u003c 0) ? \u0027red\u0027 : \u0027green\u0027",
+                                      "iconF7": "\u003d(Number.parseFloat(items[props.item37113].state) \u003e 0) ? \u0027arrow_right\u0027 : \u0027arrow_left\u0027",
+                                      "iconSize": "12px",
+                                      "popoverOpen": "\u003d\"#info-grid\"",
+                                      "style": {
+                                        "font-size": "14px",
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003d Number.parseFloat(items[props.item37113].state).toFixed(3)+\" kW\""
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "flex-direction": "column",
+                                  "height": "70px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              }
+                            },
+                            {
+                              "component": "f7-block",
+                              "config": {
+                                "style": {
+                                  "align-items": "center",
+                                  "border": "3px solid blue",
+                                  "border-radius": "20px",
+                                  "display": "flex",
+                                  "flex-direction": "column",
+                                  "height": "100px",
+                                  "justify-content": "center",
+                                  "width": "100px"
+                                }
+                              },
+                              "slots": {
+                                "default": [
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "popoverOpen": "\u003d\"#info-home\""
+                                    },
+                                    "slots": {
+                                      "default": [
+                                        {
+                                          "component": "oh-icon",
+                                          "config": {
+                                            "color": "blue",
+                                            "height": "50px",
+                                            "icon": "if:healthicons:home-outline"
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "component": "oh-link",
+                                    "config": {
+                                      "action": "popover",
+                                      "iconColor": "\u003d((Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 0) ? \u0027red\u0027 : \u0027green\u0027",
+                                      "iconF7": "\u003d((Number.parseFloat(items[props.item32080].state)-Number.parseFloat(items[props.item37113].state)) \u003e 0) ? \u0027arrow_right\u0027 : \u0027arrow_left\u0027",
+                                      "iconSize": "12px",
+                                      "popoverOpen": "\u003d\"#info-home\"",
+                                      "style": {
+                                        "font-size": "14px",
+                                        "white-space": "nowrap"
+                                      },
+                                      "text": "\u003d(Number.parseFloat(items[props.item32080].state)\n - Number.parseFloat(items[props.item37113].state)).toFixed(3) + \u0027 kW\u0027\n"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "f7-popover",
+            "config": {
+              "closeByBackdropClick": true,
+              "closeByOutsideClick": true,
+              "closeOnEscape": true,
+              "id": "\u003d\"info-solar\"",
+              "style": {
+                "background-color": "snow2",
+                "color": "rgb(238,118,0)",
+                "height": "auto",
+                "width": "250px"
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list",
+                  "config": {
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(Number.parseFloat(items[props.item32114].state)  \n + Number.parseFloat(items[props.item37784].state)  \n - Number.parseFloat(items[props.item37786].state)).toFixed(3) + \u0027 kWh\u0027\n",
+                          "title": "Ertrag Module"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003ditems[props.item32078].displayState",
+                          "title": "Maximal Leistung"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(Number.parseFloat(items[props.item32016].state*items[props.item32017].state)/1000).toFixed(3) + \u0027 kW\u0027",
+                          "title": "Leistung String 1"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(Number.parseFloat(items[props.item32018].state*items[props.item32019].state)/1000).toFixed(3) + \u0027 kW\u0027",
+                          "title": "Leistung String 2"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "f7-popover",
+            "config": {
+              "closeByBackdropClick": true,
+              "closeByOutsideClick": true,
+              "closeOnEscape": true,
+              "id": "\u003d\"info-batt\"",
+              "style": {
+                "background-color": "snow2",
+                "color": "teal",
+                "height": "auto",
+                "width": "250px"
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list",
+                  "config": {
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.item37784",
+                          "title": "Geladen"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.item37786",
+                          "title": "Entladen"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.item37022",
+                          "title": "Temp. Batterie"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "f7-popover",
+            "config": {
+              "closeByBackdropClick": true,
+              "closeByOutsideClick": true,
+              "closeOnEscape": true,
+              "id": "\u003d\"info-inverter\"",
+              "style": {
+                "background-color": "snow2",
+                "color": "green",
+                "height": "auto",
+                "width": "250px"
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list",
+                  "config": {
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(Number.parseFloat(items[props.item32114].state)).toFixed(3) + \u0027 kWh\u0027",
+                          "title": "Ertrag Inverter"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(Number.parseFloat(items[props.item32087].state)).toFixed(1) + \u0027 °C\u0027",
+                          "title": "Temperatur"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.item32085",
+                          "title": "Frequenz"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "f7-popover",
+            "config": {
+              "closeByBackdropClick": true,
+              "closeByOutsideClick": true,
+              "closeOnEscape": true,
+              "id": "\u003d\"info-grid\"",
+              "style": {
+                "background-color": "snow2",
+                "color": "darkred",
+                "height": "auto",
+                "width": "250px"
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list",
+                  "config": {
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.itemDailyProductionToGrid",
+                          "title": "Netzeinspeisung"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "\u003dprops.itemDailyConsumptionFromGrid",
+                          "title": "Netzbezug"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "f7-popover",
+            "config": {
+              "closeByBackdropClick": true,
+              "closeByOutsideClick": true,
+              "closeOnEscape": true,
+              "id": "\u003d\"info-home\"",
+              "style": {
+                "background-color": "snow2",
+                "color": "blue",
+                "height": "auto",
+                "width": "250px"
+              }
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list",
+                  "config": {
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d (Number.parseFloat(items[props.item32114].state) \n  -Number.parseFloat(items[props.itemDailyProductionToGrid].state) \n  +Number.parseFloat(items[props.itemDailyConsumptionFromGrid].state) ).toFixed(2)+ \u0027 kWh\u0027\n",
+                          "title": "Haus gesamt"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d (Number.parseFloat(items[props.item32114].state) \n  -Number.parseFloat(items[props.itemDailyProductionToGrid].state) ).toFixed(2)+ \u0027 kWh\u0027\n",
+                          "title": "Haus von PV"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d(100-(Number.parseFloat(items[props.itemDailyProductionToGrid].state) \n  / (Number.parseFloat(items[props.item32114].state) \n   - Number.parseFloat(items[props.item37786].state) \n   + Number.parseFloat(items[props.item37784].state)) )*100).toFixed(2) + \u0027 %\u0027\n",
+                          "title": "Eigenverbrauch heute"
+                        }
+                      },
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "after": "\u003d (100*(Number.parseFloat(items[props.item32114].state) \n    -Number.parseFloat(items[props.itemDailyProductionToGrid].state)) \n   /(Number.parseFloat(items[props.item32114].state) \n    -Number.parseFloat(items[props.itemDailyProductionToGrid].state) \n    +Number.parseFloat(items[props.itemDailyConsumptionFromGrid].state))).toFixed(2)+ \u0027 %\u0027\n",
+                          "title": "Autarkie"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rlk_battery_status": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "rlk_battery_status",
+      "tags": [
+        "marketplace:128043"
+      ],
+      "props": {
+        "parameters": [
+          {
+            "context": "item",
+            "description": "Group:Number:MIN Item that aggregates all the battery levels",
+            "label": "Minimum Battery Level Item",
+            "name": "minLevel",
+            "required": true,
+            "type": "TEXT",
+            "filterCriteria": [
+              {
+                "value": "Group",
+                "name": "type"
+              }
+            ]
+          },
+          {
+            "default": "100",
+            "description": "Maximum percentage to show in the widget",
+            "label": "Max Percent",
+            "name": "max",
+            "required": false,
+            "type": "INTEGER",
+            "min": 0,
+            "max": 100
+          },
+          {
+            "default": "60",
+            "description": "The percentage above which green is used",
+            "label": "Green Level",
+            "name": "green",
+            "required": false,
+            "type": "INTEGER",
+            "min": 0,
+            "max": 100
+          },
+          {
+            "default": "30",
+            "description": "The percentage above which orange is used",
+            "label": "Orange Level",
+            "name": "orange",
+            "required": false,
+            "type": "INTEGER",
+            "min": 0,
+            "max": 100
+          },
+          {
+            "default": "Minimum Battery Level",
+            "description": "Title used for the widget to the left of the colon.",
+            "label": "Title",
+            "name": "title",
+            "required": false,
+            "type": "TEXT"
+          }
+        ],
+        "parameterGroups": []
+      },
+      "timestamp": "Nov 28, 2022, 8:17:12 AM",
+      "component": "oh-list-card",
+      "config": {
+        "title": "\u003dprops.title + \": \" + ((items[props.minLevel].displayState \u003d\u003d\u003d undefined) ? items[props.minLevel].state : items[props.minLevel].displayState)"
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "oh-repeater",
+            "config": {
+              "filter": "Number.parseFloat(items[loop.item.name].state) \u003c\u003d props.max",
+              "for": "item",
+              "fragment": true,
+              "groupItem": "\u003dprops.minLevel",
+              "sourceType": "itemsInGroup"
+            },
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list-item",
+                  "config": {
+                    "badge": "\u003d(items[loop.item.name].displayState \u003d\u003d\u003d undefined) ? loop.item.state : items[loop.item.name].displayState",
+                    "badgeColor": "\u003d(Number.parseFloat(loop.item.state) \u003e props.green) ? \"green\" : (Number.parseFloat(loop.item.state) \u003e props.orange) ? \"orange\" : \"red\"",
+                    "icon": "\u003d(Number.parseFloat(loop.item.state) \u003e props.green) ? \"f7:battery_100\" : (Number.parseFloat(loop.item.state) \u003e props.orange) ? \"f7:battery_25\" : \"f7:battery_0\"",
+                    "iconColor": "\u003d(Number.parseFloat(loop.item.state) \u003e props.green) ? \"green\" : (Number.parseFloat(loop.item.state) \u003e props.orange) ? \"orange\" : \"red\"",
+                    "item": "\u003dloop.item.name",
+                    "title": "\u003dloop.item.label"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

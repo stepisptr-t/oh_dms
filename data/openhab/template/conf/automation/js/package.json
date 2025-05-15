@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "jslib": "file:../jslib/jslib-1.0.0.tgz",
+    "openhab": "^5.10.1"
+  }
+}

@@ -1,0 +1,102 @@
+Group ShouldBePersistedPredictions
+
+String PredictionsToday "Predictions for today" (gPredictions, ShouldBePersistedPredictions)
+String PredictionsTomorrow "Prediction for tomorrow" (gPredictions, ShouldBePersistedPredictions)
+
+Switch Prediction_manual_recalculation "Manual recalculation of predictions" <settings> (gPredictions)
+
+// =====================================================================
+//                               PVForecast
+// =====================================================================
+
+DateTime Predicted_energy_tomorrow_date "Predicted solar density tomorrow (date) [%1$td.%1$tm.%1$tY]" <energy> (gPredictions) {
+    channel="http:url:electricity_prediction_tomorrow:date"
+}
+Number Predicted_energy_tomorrow_value "Predicted solar density tomorrow (value) [%d Wh/m2]" <energy> (gPredictions, ShouldBePersistedPredictions)
+    { channel="http:url:electricity_prediction_tomorrow:value" }
+
+Number Predicted_energy_tomorrow_total "Predicted enery generated tomorrow [%.2f kWh]" <energy> (gPredictions)
+
+DateTime Predicted_energy_today_date "Predicted solar density today (date) [%1$td.%1$tm.%1$tY]" <energy> (gPredictions) {
+    channel="http:url:electricity_prediction_today:date"
+}
+Number Predicted_energy_today_value "Predicted solar density today (value) [%d Wh/m2]" <energy> (gPredictions, ShouldBePersistedPredictions)
+    { channel="http:url:electricity_prediction_today:value" }
+
+Number Predicted_energy_today_total "Predicted enery generated today [%.2f kWh]" <energy> (gPredictions) 
+
+Number MovingHistoricalMaximum "Maximum predicted energy potential from historical data" (gPredictions, ShouldBePersistedPredictions)
+
+String PredictionIrradiationLevelToday "Predicted irradiation level today" (gPredictions, ShouldBePersistedPredictions)
+String PredictionIrradiationLevelTomorrow "Predicted irradiation level tomorrow" (gPredictions, ShouldBePersistedPredictions)
+
+// =====================================================================
+//                             OpenWeatherMap
+// =====================================================================
+
+DateTime Sunrise_today "Time of sunrise tomorrow [%1$ta %1$tR]" <time> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#sunrise" }
+
+DateTime Sunset_today "Time of sunset tomorrow [%1$ta %1$tR]" <time> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#sunset" }
+
+Number WeatherDayTemperature_today "Day temperature today [%.1f °C]" <temperature> (gPredictions, ShouldBePersistedPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#day-temperature" }
+
+Number WeatherDayTemperature_tomorrow "Day temperature tomorrow [%.1f °C]" <temperature> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#day-temperature" }
+
+String Weather_condition_today "Weather condition today [%s]" <weather> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#condition" }
+
+Number Weather_cloudiness_today "Cloudiness today [%d %%]" <weather> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#cloudiness" }
+
+Number Weather_precipitation_today "Precipitation probability today [%d %%]" <weather> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#precip-probability" } 
+
+Number Weather_rain_today "Rain today [%.2f mm]" (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#rain" }
+
+Number Weather_snow_today "Snow today [%.2f mm]" (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastToday#snow" }
+
+DateTime Sunrise_tomorrow "Time of sunrise tomorrow [%1$ta %1$tR]" <time> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#sunrise" }
+
+DateTime Sunset_tomorrow "Time of sunset tomorrow [%1$ta %1$tR]" <time> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#sunset" }
+
+String Weather_condition_tomorrow "Weather condition tomorrow [%s]" <weather> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#condition" }
+
+Number Weather_cloudiness_tomorrow "Cloudiness tomorrow [%d %%]" <weather> (gPredictions, ShouldBePersistedPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#cloudiness" }
+
+Number Weather_precipitation_tomorrow "Precipitation probability [%d %%]" <weather> (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#precip-probability" } 
+
+Number Weather_rain_tomorrow "Rain tomorrow [%.2f mm]" (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#rain" }
+
+Number Weather_snow_tomorrow "Snow tomorrow [%.2f mm]" (gPredictions)
+    { channel="openweathermap:onecall:api:local:forecastTomorrow#snow" }
+
+String PredictionWeatherLevelToday "Predicted weather level today" (gPredictions)
+String PredictionWeatherLevelTomorrow "Predicted weather level tomorrow" (gPredictions)
+
+// =====================================================================
+//                          spotovaelektrina.cz
+// =====================================================================
+
+// (1 = cheapest, 24 = most expensive)
+Number Spot_price_hour_level "Order of current hour in the day based on price"  (gPrices, ShouldBePersistedPredictions)
+    { channel="http:url:electricity-price-24h-scale:pricelevel" }
+
+Number Spot_price_current_czk "Electricity price on the spot market [%d CZK]" <price> (gPrices, ShouldBePersistedPredictions)
+    { channel="http:url:electricity-spot-price:priceczk" }
+
+
+// =====================================================================
+//              todo ENTSO-E spot price once OH v5.0.0 is released
+// =====================================================================

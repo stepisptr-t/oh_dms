@@ -1,0 +1,87 @@
+Bridge modbus:tcp:localhostTCP [ host="<INVERTER_IP>", port=502, id=3, afterConnectionDelayMillis=1000, timeBetweenTransactionsMillis=1, connectMaxTries=10] {
+  
+	Bridge poller importantInputRegisters [start=0, length=99, refresh=20000, type="input" ] {
+		Thing data PowerDC1 [ readStart="10", readValueType="int16" ]
+		Thing data PowerDC2 [ readStart="11", readValueType="int16" ]
+		Thing data BatteryPowerCharge [ readStart="22", readValueType="int16" ]
+	    Thing data BatterySOC [ readStart="28", readValueType="int16" ]
+		Thing data FeedInPower [ readStart="70", readValueType="int32_swap" ]
+	}
+
+    Bridge poller inputRegisters [ start=0, length=99, refresh=60000, type="input" ] {
+        Thing data NetworkVoltage [ readStart="0" , readValueType="int16"]
+		Thing data OutputCurrent [ readStart="1", readValueType="int16"]
+		Thing data ACPower [ readStart="2", readValueType="int16" ]  
+		Thing data PV1Voltage [ readStart="3", readValueType="int16"]
+		Thing data PV2Voltage [ readStart="4", readValueType="int16"]
+		Thing data PV1Current [ readStart="5", readValueType="int16"]
+		Thing data PV2Current [ readStart="6", readValueType="int16"]
+		Thing data RunMODE [ readStart="9", readValueType="int16"]
+		Thing data BatteryTemp [ readStart="24", readValueType="int16" ]
+		Thing data BatteryOutputEnergyToday [ readStart="32", readValueType="uint16"]
+		Thing data BatteryInputEnergyToday [readStart="35", readValueType="uint16"]
+		Thing data BatteryCapacity [readStart="38", readValueType="uint32_swap"]
+		Thing data FeedInTotal [ readStart="72", readValueType="int16"]
+		Thing data ConsumeTotal [ readStart="74", readValueType="uint32_swap"]
+		Thing data DailyYield [ readStart="80", readValueType="int16" ]
+    }
+
+	Bridge poller lockStatePoller [ start=0, length=99, refresh=1000, type="input" ] {
+		Thing data LockState [ readStart="84", readValueType="uint16" ]
+	}
+
+	Bridge poller inputRegisters100 [ start=100, length=99, refresh=60000, type="input" ] {
+		Thing data feedin_energy_today [ readStart="152", readValueType="uint32_swap" ]
+        Thing data consum_energy_today [ readStart="154", readValueType="uint32_swap" ]
+		Thing data SystemVoltage_R1 [ readStart="106", readValueType="int16" ]
+		Thing data SystemCurrent_R1 [ readStart="107", readValueType="int16" ]
+		Thing data SystemPower_R1 [ readStart="108", readValueType="int16" ]
+		Thing data SystemVoltage_S2 [ readStart="110", readValueType="int16" ]
+		Thing data SystemCurrent_S2 [ readStart="111", readValueType="int16"]
+		Thing data SystemPower_S2 [ readStart="112", readValueType="int16" ]
+		Thing data SystemVoltage_T3 [ readStart="114", readValueType="int16" ]
+        Thing data SystemCurrent_T3 [ readStart="115", readValueType="int16"]
+		Thing data SystemPower_T3 [ readStart="116", readValueType="int16" ]
+		Thing data FeedInPowerR1 [ readStart="130", readValueType="uint32_swap" ]
+		Thing data FeedInPowerS2 [ readStart="132", readValueType="uint32_swap" ]
+		Thing data FeedInPowerT3 [ readStart="134", readValueType="uint32_swap" ]
+		Thing data EnergyTotal [ readStart="148", readValueType="uint32_swap" ]
+		Thing data SolarEnergyToday [ readStart="150", readValueType="uint16" ]
+    }
+
+	Bridge poller holdingRegisters [start=0, length=99, refresh=60000, type="holding"] {
+		Thing data PasswordLock [ readStart="0", readValueType="uint16", writeStart="0", writeValueType="int16", writeType="holding"]
+	}
+
+	Bridge poller holdingRegisters100 [ start=100, length=99, refresh=60000, type="holding" ] {
+		Thing data SelfUseMinSOC [ readStart="147.1", readValueType="uint8", writeStart="97", writeValueType="int16", writeType="holding"]
+		Thing data Language [ readStart="187", readValueType="int16", writeStart="71", writeValueType="int16", writeType="holding"]
+		Thing data Export_Control_User_Limit [ readStart="182", readValueType="int16", writeStart="66", writeValueType="int16", writeType="holding"]
+		Thing data EPS_Mute [ readStart="183", readValueType="int16", writeStart="67", writeValueType="int16", writeType="holding"]
+		
+		Thing data FirmwareMinor [readStart="125", readValueType="uint16"]
+		Thing data FirmwareMajor [readStart="127", readValueType="uint16"]
+	
+		Thing data FirmwareARMMinor [readStart="131", readValueType="uint16"]
+		Thing data FirmwareARMMajor [readStart="128", readValueType="uint16"]
+
+		Thing data InverterUseMode [readStart="139", readValueType="uint16", writeStart="31", writeValueType="int16", writeType="holding" ]
+		Thing data ManualMode [ readStart="140", readValueType="int16", writeStart="32", writeValueType="int16", writeType="holding"]
+		Thing data FactoryExportLimit [ readStart="181", readValueType="uint16" ]
+	}
+	
+	Bridge poller holdingRegisters200 [ start=200, length=99, refresh=60000, type="holding" ] {
+		Thing data GridTiedLimit [ readStart="274", readValueType="int16", writeStart="167", writeValueType="int16", writeType="holding" ]	
+		Thing data MaxSOC [ readStart="270", readValueType="uint16", writeStart="224", writeValueType="int16", writeType="holding" ]
+		Thing data BatteryToEVEnabled [ readStart="271", readValueType="uint16", writeStart="225", writeValueType="int16", writeType="holding" ]
+	}
+
+	Bridge poller PowerControlFC16 [start=200, length=100, refresh=60000, type="holding"] {
+		Thing data ControlMode [readStart="256", readValueType="uint16", writeStart="124", writeValueType="int16", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+		Thing data TargetSOC [readStart="283", readValueType="uint16", writeStart="131", writeValueType="int16", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+		Thing data TargetEnergy [readStart="274", readValueType="int32_swap", writeStart="132", writeValueType="int32_swap", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+		Thing data TargetChargeDischargePower [readStart="276", readValueType="int32_swap", writeStart="134", writeValueType="int32_swap", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+		Thing data PowerControlTimeOfDuration [readStart="282", readValueType="uint16", writeStart="130", writeValueType="int16", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+		Thing data RemoteControlTimeout [readStart="286", readValueType="int16", writeStart="134", writeValueType="int16", writeType="holding", writeMultipleEvenWithSingleRegisterOrCoil=true]
+	}
+}

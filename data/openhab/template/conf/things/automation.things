@@ -1,0 +1,43 @@
+Thing energymanager:signalizator:surplusNotHeating[
+                        refreshInterval="30",
+                        peakProductionPower=10000,
+                        minStorageSoc="50",
+                        maxStorageSoc="93",
+                        productionPower="gPowerDC",
+                        gridPower="Solax_FeedInPower",
+                        storageSoc="Solax_BatterySOC",
+                        storagePower="Solax_BatteryPowerCharge",
+                        electricityPrice="Electricity_Spot_Price_CZK", 
+                        initialDelay="30",
+                        toggleOnNegativePrice="false",
+                        enableInverterLimitingHeuristic="true",
+                        toleratedPowerDraw="200"
+                        ] {
+	Channels:
+		Type surplus-output : dum_bojler [ priority="1", loadPower="2200" ]
+        Type surplus-output : bazen_tc [ priority="2", loadPower="850" ]
+		Type surplus-output : bazen_filtrace [ priority="3", loadPower="500", minRuntimeMinutes="2", minCooldownMinutes="2" ]
+}
+
+
+Thing energymanager:signalizator:surplusHeating [
+                        refreshInterval="30",
+                        peakProductionPower=10000,
+                        minStorageSoc="65",
+                        maxStorageSoc="95",
+                        productionPower="gPowerDC",
+                        gridPower="Solax_FeedInPower",
+                        storageSoc="Solax_BatterySOC",
+                        storagePower="Solax_BatteryPowerCharge",
+                        electricityPrice="Electricity_Spot_Price_CZK", 
+                        initialDelay="30",
+                        toggleOnNegativePrice="false",
+                        enableInverterLimitingHeuristic="true",
+                        toleratedPowerDraw="200"
+                        ] {
+	Channels:
+		Type surplus-output : dum_bojler [ priority="1", loadPower="2200" ]
+		Type surplus-output : dum_tc [ priority="2", loadPower="2000" ]
+		// late spring setting up the pool
+        Type surplus-output : bazen_filtrace [ priority="3", loadPower="500", minRuntimeMinutes="2", minCooldownMinutes="2" ]
+}

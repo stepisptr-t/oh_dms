@@ -1,0 +1,47 @@
+Bridge zigbee:coordinator_ember:stick "Sonoff Zigbee 3.0 USB Dongle Plus E" [zigbee_port="/dev/ttyACM0",  zigbee_baud=115200, zigbee_flowcontrol=1, zigbee_childtimeout=864000, zigbee_concentrator=1, zigbee_meshupdateperiod=86400, zigbee_panid=2584, zigbee_extendedpanid="D8BECD0939990A18", zigbee_networkkey="15 CF 39 A3 92 E2 58 7A 0F BB B8 4D 95 50 24 CA" ]
+
+Bridge mqtt:broker:local-broker "Mosquitto MQTT Broker" [ host="localhost", port=1883, secure=false, clientID="openHAB_docker" ]
+
+Thing mqtt:topic:tasmota:tasmota_boiler "Tasmota boiler temperature sensor" (mqtt:broker:local-broker) [ availabilityTopic="tele/boiler_temperatures/LWT", payloadAvailable="Online", payloadNotAvailable="Offline" ] {
+    Channels:
+        Type number : temperature1 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-1.Temperature"]
+        Type number : temperature2 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-2.Temperature"]
+        Type number : temperature3 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-3.Temperature"]
+        Type number : temperature4 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-4.Temperature"]
+        Type number : temperature5 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-5.Temperature"]
+        Type number : temperature6 [stateTopic="tele/boiler_temperatures/SENSOR", transformationPattern="JSONPATH:$.DS18B20-6.Temperature"]
+}
+
+Thing mqtt:topic:tasmota:tasmota_circulation "Tasmota water circulation thermostat" (mqtt:broker:local-broker) [ availabilityTopic="tele/circ_thermostat/LWT", payloadAvailable="Online", payloadNotAvailable="Offline" ] {
+    Channels:
+        Type number : temperature [stateTopic="tele/circ_thermostat/SENSOR", transformationPattern="JSONPATH:$.WTS01.Temperature"]
+        Type switch : relay       [stateTopic="cmnd/circ_thermostat/POWER1", commandTopic="cmnd/circ_thermostat/POWER1"]
+    }
+
+Thing mqtt:topic:tasmota:obyvak_temperature "Tasmota livingroom temperature reading" (mqtt:broker:local-broker) [ availabilityTopic="tele/obyvak_teplomer/LWT", payloadAvailable="Online", payloadNotAvailable="Offline" ] {
+    Channels:
+        Type number : temperature [stateTopic="tele/obyvak_teplomer/SENSOR", transformationPattern="JSONPATH:$.SHT4X.Temperature"]
+        Type number : humidity [stateTopic="tele/obyvak_teplomer/SENSOR", transformationPattern="JSONPATH:$.SHT4X.Humidity"]
+        Type number : dewPoint [stateTopic="tele/obyvak_teplomer/SENSOR", transformationPattern="JSONPATH:$.SHT4X.DewPoint"]
+    }
+
+Thing mqtt:topic:tasmota:tasmotaesp "tasmota temp sensor" (mqtt:broker:local-broker) [ availabilityTopic="tele/tasmota_test/LWT", payloadAvailable="Online", payloadNotAvailable="Offline" ] {
+    Channels:
+        // Sensor
+        Type number : TemperatureBME280  [stateTopic="tele/tasmota_test/SENSOR",  transformationPattern="JSONPATH:$.BME280.Temperature"]
+        Type number : HumidityBME280  [stateTopic="tele/tasmota_test/SENSOR",  transformationPattern="JSONPATH:$.BME280.Humidity"]
+        Type switch : Switch1        [stateTopic="stat/tasmota_test/POWER", commandTopic="cmnd/tasmota_test/POWER"]
+
+        // Tasmota Status
+        Type string : Version      [stateTopic="stat/tasmota_test/STATUS2", transformationPattern="JSONPATH:$.StatusFWR.Version"]
+        Type switch : Reachable    [stateTopic="tele/tasmota_test/LWT",     transformationPattern="MAP:tasmota-reachable.map"]
+        
+        Type string : RestartReason [stateTopic="tele/tasmota_test/INFO3", transformationPattern="JSONPATH:$.Info3.RestartReason"]
+        
+        Type string : Version       [stateTopic="tele/tasmota_test/INFO1", transformationPattern="JSONPATH:$.Info1.Version"]
+        Type number : RSSI          [stateTopic="tele/tasmota_test/STATE", transformationPattern="JSONPATH:$.Wifi.RSSI"]
+        Type string : WifiDowntime  [stateTopic="tele/tasmota_test/STATE", transformationPattern="JSONPATH:$.Wifi.Downtime"]
+        Type number : LoadAvg       [stateTopic="tele/tasmota_test/STATE", transformationPattern="JSONPATH:$.LoadAvg"]
+        Type number : Uptime        [stateTopic="tele/tasmota_test/STATE", transformationPattern="JSONPATH:$.UptimeSec"]
+        Type string : Result        [stateTopic="stat/tasmota_test/RESULT"]
+}

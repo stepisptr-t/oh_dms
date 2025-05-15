@@ -1,0 +1,258 @@
+Group gHome
+Group ShouldBePersisted "Group of items whose history should be persisted"
+
+Group ProxiedSwitches "Parallel switches"
+
+Switch VacationMode "Vacation mode" <settings> (NotVacationMode, gHome, ShouldBePersisted, VacationModeAndAllowedSurplus)
+Group:Switch:NAND(ON, OFF) NotVacationMode "Not vacation mode" <settings> (AllowedSurplusSwitching, CirculationSwitchSerial, MinimalTemperatureDuringTOUSerial)
+Switch AllowSurplusSwitchingDuringVacation "Allows to switch based on surplus during the vacation" (VacationModeAndAllowedSurplus)
+
+Group:Switch:OR(ON,OFF) AllowedSurplusSwitching (BoilerSurplusAndAllowed, HeatpumpSurplusAndAllowed, PoolPumpSurplusAndAllowed)
+    Group:Switch:AND(ON, OFF) VacationModeAndAllowedSurplus (AllowedSurplusSwitching)
+
+Number SpotIntervalLengthMinutes "Length of spot price validity interval"
+Switch SpotFeedInMode "Energy to the grid is priced based on the spot price" (DischargeToGridSignalizator, DisableFeedInSignalizator, ShouldBePersisted)
+Switch SpotDrawMode "Energy from the grid is priced based on the spot price" (ChargeFromGridSignalizator, ShouldBePersisted)
+
+// assuming heat pump is desired to be operating only during the heating season
+Switch HeatingSeason "Heating season" <settings> (NotHeatingSeason, gHome, HeatPumpSwitchSerial, BoilerSurplusANDHeatingSeason, PoolPumpSignalizatorANDHeatingSeason, HeatPumpHeatingSurplusSignalizator, ShouldBePersisted) 
+Group:Switch:NAND(ON, OFF) NotHeatingSeason "Not heating season" <settings> (BoilerSurplusANDNotHeatingSeason, PoolPumpSignalizatorANDNotHeatingSeason, ShouldBePersisted)
+
+Group:Switch:OR(ON, OFF) ExportPriorityMode "Export priority mode" <settings> (NotExportPriorityMode)
+Group:Switch:NAND(ON, OFF) NotExportPriorityMode "Not export priority mode" <settings> // feedin is not allowed in our installation (BoilerPredictionsAndNotExportPrioritySignalizator, HeatPumpSwitchSerial, PoolPumpSwitchSerial)
+
+// ===================================================================
+//                     AUTOMATION RELATED ITEMS
+// ===================================================================
+
+Group TriggeredByCheapestSpotPriceLevel "Switches to toggle during the cheapest spot prices based on metadata"
+Group TriggeredByExpensiveSpotPriceLevel "Switches to toggle during the most expensive spot prices based on metadata"
+
+Group TriggeredByCheapestSpotPrice "SSwitches should be toggled if spot price falls bellow their threshold in the metadata"
+Group TriggeredByExpensiveSpotPrice "Switches should be toggled if spot price exceeds their threshold in the metadata"
+
+Group TriggeredBySufficientSOC "Switches should be toggled if SOC of the battery is above the threshold in the metadata"
+Group TriggeredByInsufficientSOC "Switches should be toggled if SOC of the battery is below the threshold in the metadata"
+
+Number AverageDaytimeWattage "Average day wattage of the house [%.1f W]" <settings> (ShouldBePersisted)
+Number AverageNighttimeWattage "Average night wattage of the house [%.1f W]" <settings> (ShouldBePersisted)
+Number HouseBaselineWattage "Approximated baseline wattage of the house [%.1f W]" (ShouldBePersisted)
+Number TimeToDischargeByBaseline "Time to discharge battery by baseline [%d minutes]" <settings>
+Number TimeToDischargeByCurrentLoad "Time to discharge battery by current load [%d minutes]" <settings>
+
+Number MaxGridChargeWattage "Maximal wattage with which to charge the battery from the grid [%d W]" <battery> (ShouldBePersisted)
+Number MaxGridDischargeWattage "Maximal wattage with which to discharge the battery to the grid [%d W]" <battery> (ShouldBePersisted)
+Number GridChargeDischargeWattage "Wattage with which to charge/discharge the battery from/to the grid [%d W]" <battery> (ShouldBePersisted)
+Number MinESSReserveSOC "Minimal SOC of ESS when predictive switching is enabled [%d %%]" <battery> (ShouldBePersisted)
+
+// NOT USED OR TESTED ON EV YET
+Switch PredictionsDischargeESSToEV "Signalizator to discharge ESS to EV" <settings>
+Switch ESS2EVEnabled "Switch enabling discharge of ESS to EV" <settings> (ShouldBePersisted)
+
+Switch AllowPredictiveESSGridChargeDischarge "Allow to discharge or charge the ESS based on predictive data" <settings> (DischargeToGridSignalizator, ChargeFromGridSignalizator, ShouldBePersisted)
+
+Switch AllowPredictiveJITHeating "Allow heating by heatpump and boiler in the early morning if the FVE production is expected to be good during the day afterwards." <settings> (HeatPumpComplexPredictionSignalizator, BoilerPredictionsAndNotExportPrioritySignalizator)
+
+Group:DateTime LatestHeatingPlanGroup "Group used to calculate the latest heating plan of the day"
+
+DateTime LatestHeatingPlan "Latest heating plan of the day"
+
+// The price here is tricky, because it might not be profitable to charge the ESS from the grid
+// if we were not going to use the energy from the grid anyway. The price of charging the ESS is not only the  
+// current price but the LCOS of the ESS, the various fees the grid operator charges for each kWh charges as well as taxes.
+// The number should be set as the negative value of the sum of all these prices just to cover the cost. 
+Number ESSFromGridPriceThreshold "Maximum spot price when to charge the ESS from the grid automatically" (ShouldBePersisted)
+Group:Switch:AND(ON, OFF) ChargeFromGridSignalizator "Allowing to charge the battery from the grid based on the spot price"
+    Switch PredictiveChargeFromGridSignalizator "Signalizator to charge the battery from the grid by predictions" (ChargeFromGridSignalizator)
+    Switch LowEnoughSpotPriceForGridChargeSignalizator "Signalizes that the spot price is below the user defined threshold to charge from the grid" (ChargeFromGridSignalizator, TriggeredByCheapestSpotPrice) {spotPrice="ESSFromGridPriceThreshold"}
+
+// Should be higher than the LCOS of the ESS to cover costs
+Number ESSToGridPriceThreshold "Minimal price for export priority [%.2f CZK]" <price> (gPrices, ShouldBePersisted)
+Group:Switch:AND(ON, OFF) DischargeToGridSignalizator (ExportPriorityMode)
+    Switch PredictiveDischargeToGridSignalizator "Signalizator to discharge from the battery to the grid" <switch> (DischargeToGridSignalizator)
+    Switch HighEnoughSpotPriceDischargeToGridSignalizator (TriggeredByExpensiveSpotPrice, DischargeToGridSignalizator) { spotPrice="ESSToGridPriceThreshold"}
+
+Group:Switch:AND(ON, OFF) DisableFeedInSignalizator "Feeding to the grid for spot prices and feed in should be disabled"
+    Switch NegativeSpotPriceSignalizator "Signalizator signaling negative feed in price" <switch> (DisableFeedInSignalizator, TriggeredByCheapestSpotPrice) {spotPrice="0"}
+
+// Should be set to 0 if feed in is not allowed by the grid operator
+Number StandardFeedin "Standard allowed feed in wattage [%d W]" <settings> (ShouldBePersisted)
+
+// used for vacation surplus switching
+Switch AllowedFeedInSignalizator "Signalizator that feed in is allowed at the time"
+// ===================================================================
+//                        TEMPERATURE SENSORS
+// ===================================================================
+
+Number TemperatureBME280 "Temperature BME280 [%.2f °C]" <temperature> (gHome)
+    { channel="mqtt:topic:tasmota:tasmotaesp:TemperatureBME280" }
+Number TemperatureLivingroom "Temperature livingroom (SHT4X) [%.2f °C]" <temperature> (gHome)
+    { channel="mqtt:topic:tasmota:obyvak_temperature:temperature" }
+
+Number TemperatureOutside "Temperature outside[%.2f °C] " <temperature> (gHome)
+    { channel="zigbee:device:stick:a4c138d28259c19e:A4C138D28259C19E_1_temperature" }
+
+// ===================================================================
+//                              BOILER
+// ===================================================================
+Number TemperatureBoilerTop6 "Boiler horní 6 [%.2f °C]" <temperature> (gHome, BoilerMinimalTemperature, BoilerAverageTemperature, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature6" }
+Number TemperatureBoilerTop5 "Boiler horní 5 [%.2f °C]" <temperature> (gHome, BoilerMinimalTemperature, BoilerAverageTemperature, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature5" }
+Number TemperatureBoilerTop4 "Boiler horní 4 [%.2f °C]" <temperature> (gHome, BoilerMinimalTemperature, BoilerAverageTemperature, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature4" }
+Number TemperatureBoilerTop3 "Boiler horní 3 [%.2f °C]" <temperature> (gHome, BoilerMinimalTemperature, BoilerAverageTemperature, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature3" }
+Number TemperatureBoilerBottom2 "Boiler spodní 2 [%.2f °C]" <temperature> (gHome, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature2" }
+Number TemperatureBoilerBottom1 "Boiler spodní 1 [%.2f °C]" <temperature> (gHome, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_boiler:temperature1" }
+
+// The water intake temperature of the boiler. Used to approximate SOC and heat rate. Should be hooked up to a temperature sensor on the input pipe.
+Number BoilerInputTemperature "BoilerInputTemperature" <temperature> (gHome, ShouldBePersisted)
+
+Switch   BoilerPlan1ENABLE  "Enable Period 1" (ShouldBePersisted)
+DateTime BoilerPlan1START   "Period 1 Start Time" (ShouldBePersisted)
+DateTime BoilerPlan1END     "Period 1 End Time" (ShouldBePersisted, LatestHeatingPlanGroup)
+Number BoilerPlan1MINTEMPMinTempProxy "Minimal sufficient temperature for plan" (ShouldBePersisted)
+Switch BoilerPlan1 "Time plan signalizator for period 1" (BoilerPlanAnySignalizator)
+
+Switch   BoilerPlan2ENABLE  "Enable Period 2" (ShouldBePersisted)
+DateTime BoilerPlan2START   "Period 2 Start Time" (ShouldBePersisted)
+DateTime BoilerPlan2END     "Period 2 End Time" (ShouldBePersisted, LatestHeatingPlanGroup)
+Number BoilerPlan2MINTEMPMinTempProxy "Minimal sufficient temperature for plan" (ShouldBePersisted)
+Switch BoilerPlan2 "Time plan signalizator for period 2" (BoilerPlanAnySignalizator)
+
+Number MinTempProxy "Minimal sufficient temperature which satisfies all enabled periods."
+
+Group:Number:MIN BoilerMinimalTemperature "Minimal temperature in the boiler"
+Group:Number:AVG BoilerAverageTemperature "Average temperature in the boiler"
+
+Number BoilerPredictedTimeToHeat "Predicted time to heat up the boiler to max temperature [%d min]" <settings> (ShouldBePersisted)
+Number BoilerPredictedHeatRate "Predicted heat rate of the boiler [%.2f %%/min]" <settings> (ShouldBePersisted)
+Number BoilerSOC "State of charge of the boiler [%.2f %%]" (ShouldBePersisted)
+
+Number BoilerTargetTemperature "Target temperature of boiler" (ShouldBePersisted)
+
+Group:Switch:AND(ON, OFF) BoilerSwitchSerial "Boiler thermostat proxy" <thermostat> (ProxiedSwitches)
+    Switch BoilerTargetTemperatureNotReached "Boiler signalizator indicating availability to heat up" <thermostat> (BoilerSwitchSerial)
+    Group:Switch:OR(ON, OFF) BoilerSwitchParallel "Boiler signalizators" <switch> (BoilerSwitchSerial)
+        
+        // surplus DR
+        Group:Switch:AND(ON, OFF) BoilerSurplusAndAllowed (BoilerSwitchParallel)
+        Group:Switch:OR(ON,OFF) BoilerSwitchSurplus "Boiler signalizator based on surplus" (BoilerSurplusAndAllowed)
+            Group:Switch:AND(ON, OFF) BoilerPredictionsAndNotExportPrioritySignalizator (BoilerSwitchSurplus)
+            Switch BoilerWeatherPredictionsSignalizator "Boiler predictions based signalziator" <switch> (BoilerPredictionsAndNotExportPrioritySignalizator)
+            Group:Switch:OR(ON, OFF) BoilerSurplusSignalizator "Boiler signalizators of surplus based on time of year" <switch> (BoilerSwitchSurplus)
+                Group:Switch:AND(ON, OFF) BoilerSurplusANDNotHeatingSeason "Boiler surplus for non-heating season" (BoilerSurplusSignalizator) 
+                    Switch BoilerSurplusSignalizatorNotHeatingSeason "Boiler surplus signalizator" <switch> (BoilerSurplusANDNotHeatingSeason)
+                        { channel="energymanager:signalizator:surplusNotHeating:dum_bojler" }
+                Group:Switch:AND(ON, OFF) BoilerSurplusANDHeatingSeason "Boiler for heating season" (BoilerSurplusSignalizator)
+                    Switch BoilerSurplusSignalizatorHeatingSeason "Boiler surplus signalizator" <switch> (BoilerSurplusANDHeatingSeason)
+                        { channel="energymanager:signalizator:surplusHeating:dum_bojler" }
+        
+        // TOU
+        Switch BoilerManual "Boiler signalizator of manual switching in UI" <switch> (BoilerSwitchParallel)
+        Group:Switch:AND(ON,OFF) MinimalTemperatureDuringTOUSerial (BoilerSwitchParallel)
+            Group:Switch:OR(ON, OFF) BoilerPlanAnySignalizator "Signalizator which turns on if any time plan demands heating." <switch> (MinimalTemperatureDuringTOUSerial, CirculationSwitchParallel)
+            Switch BoilerMinimalTempNotReachedSignalizator "Boiler proxy for demand to heat to minimal temperature" <switch> (MinimalTemperatureDuringTOUSerial)
+        Switch BoilerCheapestSpotHoursSignalizator "Signalizator of cheapest X hours of the day" <switch> (/*not used BoilerSwitchParallel,*/ TriggeredByCheapestSpotPriceLevel) {spotLevels="4"}
+Switch BoilerSwitch "Boiler Switch" <switch> (gHome, ShouldBePersisted)
+    { channel="zigbee:device:stick:b43522fffee0be69:B43522FFFEE0BE69_1_switch" }
+// ===================================================================
+//                        CIRCULATION
+// ===================================================================
+
+Switch   CirculationPlanENABLE  "Enable circulation period" (ShouldBePersisted)
+DateTime CirculationPlanSTART   "Period start time" (ShouldBePersisted)
+DateTime CirculationPlanEND     "Period end time" (ShouldBePersisted, LatestHeatingPlanGroup)
+Switch   CirculationPlan        "Time plan signalizator for circulation period" (CirculationSwitchParallel)
+
+Number CirculationTemperatureCurrent "Current circulation temperature [%.2f °C]" <temperature>
+    { channel="mqtt:topic:tasmota:tasmota_circulation:temperature" }
+Number CirculationThresholdTemperature "Threshold value of the probe when to switch on circulation [%.2f °C]" <temperature> (ShouldBePersisted)
+Number CirculationThresholdIncrease "Threshold value of increase which can be taken as circulation cycle fullfilment [%.2f °C]" <settings> (ShouldBePersisted)
+
+Group:Switch:AND(ON, OFF) CirculationSwitchSerial "Circulation switch proxy" (ProxiedSwitches)
+Group:Switch:OR(ON, OFF) CirculationSwitchParallel "Circulation switch proxy" (CirculationSwitchSerial)
+Switch CirculationThermostat "Circulation thermostat signalizator" <switch> (CirculationSwitchSerial)
+
+Switch CirculationSwitch "Circulation relay" <switch> (gHome, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmota_circulation:relay" }
+
+// ===================================================================
+//                           HEAT PUMP
+// ===================================================================
+
+Number MaxHomeTemperature "Maximal home temperature [%d ˚C]" <temperature> (ShouldBePersisted)
+Number MinHomeTemperature "Minimal home temperature [%d ˚C]" <temperature> (ShouldBePersisted)
+Number HeatPumpAutoMinESSSOC "The minimal SOC ESS when to switch on heat pump automatically [%d %%]" <battery> (ShouldBePersisted)
+
+// useful for spring and autumn
+Number MaxTemperatureOutside "Maximal acceptable outside temperature to automatically trigger heat pump [%.2f °C]" <temperature> (ShouldBePersisted)
+
+Group:Switch:AND(ON, OFF) HeatPumpSwitchSerial "Heat pump final proxy" <swtich> (ProxiedSwitches)
+Group:Switch:OR(ON, OFF) HeatPumpSwitchParallel "Heat Pump proxies of various signalizators" <switch> (HeatPumpSwitchSerial)
+    // TOU
+    Switch HeatPumpManual "Heat Pump signalizator for manual switching in UI" <switch> (HeatPumpSwitchParallel)
+    
+    // surplus DR
+    Group:Switch:AND(ON, OFF) HeatpumpSurplusAndAllowed (HeatPumpSwitchParallel)
+        Group:Switch:OR(ON, OFF) HeatPumpSurplusSignalizator (HeatpumpSurplusAndAllowed)
+        Group:Switch:AND(ON, OFF) HeatPumpComplexPredictionSignalizator "Heat pump signalizator based on predictions and temperatures" (HeatPumpSurplusSignalizator)
+            Switch HeatPumpPredictionSignalizator "Heat pump signalizator based on predictions" <switch> (HeatPumpComplexPredictionSignalizator)
+            Switch InsufficientHomeTemperatureSignalizator "Heat pump signalizer which signals possiblity to heat to comfortable temperature." (HeatPumpComplexPredictionSignalizator)
+        Group:Switch:AND(ON, OFF) HeatPumpComplexSurplusSignalizator "Heat Pump signalizator of sufficient surplus, outdoor temperature and SOC of ESS" <switch> (HeatPumpSurplusSignalizator)
+            Switch HeatPumpSOCSignalizator "Heat Pump signalizator of sufficient SOC of ESS" <switch> (HeatPumpComplexSurplusSignalizator, TriggeredBySufficientSOC) {SOC="HeatPumpAutoMinESSSOC"}
+            Switch HeatPumpTemperatureSignalizator "Heat Pump signalizator of outdoor and indoor temperature and sufficient SOC of ESS" <switch> (HeatPumpComplexSurplusSignalizator)
+            Group:Switch:AND(ON, OFF) HeatPumpHeatingSurplusSignalizator "Heat pump signalizator for heating season (in AND relationship with HeatingSeason)" <switch> (HeatPumpComplexSurplusSignalizator)
+                Switch HeatPumpSurplusSignalizatorHeatingSeason "Heat Pump signalizator of surplus via heating season thing" <switch> (HeatPumpHeatingSurplusSignalizator)
+                    { channel="energymanager:signalizator:surplusHeating:dum_tc" }
+                // If running the heatpump in reverse is desired during the non heating period, not only this whole logic has to be implemented very differently. I have no way of testing this
+                // A separate switch with its own separate logic and thermostat should be created to control it as as separate thing
+                // Group:Switch:AND(ON, OFF) HeatPumpSurplusSignalizatorANDNotHeatingSeason "Heat pump signalizator for non-heating season" <switch> (HeatPumpSurplusSignalizator)
+                // Switch HeatPumpSurplusSignalizatorHeatingSeason "Heat Pump signalizator of surplus via non heating season thing" <switch> (HeatPumpSurplusSignalizatorANDNotHeatingSeason)
+                //    { channel="energymanager:signalizator:surplusNotHeating:dump_tc" }
+
+Switch HeatPumpSwitch "Heat Pump Switch" <switch> (gHome, ShouldBePersisted)
+    { channel="mqtt:topic:tasmota:tasmotaesp:Switch1" }
+
+// ===================================================================
+//                         POOL FILTRATION
+// ===================================================================
+Switch ManualTurnOff "Manual turn off of pool pump. (for maintenance etc.)" <switch> (NotManualTurnOff, ShouldBePersisted)
+
+Switch   PoolPumpPlanENABLE  "Enable pool pump period" (ShouldBePersisted)
+DateTime PoolPumpPlanSTART   "Period start time" (ShouldBePersisted)
+DateTime PoolPumpPlanEND     "Period end time" (ShouldBePersisted)
+
+Number PoolPumpMaxDailyRuntime "Maximal daily runtime of pool pump in minutes" <settings> (ShouldBePersisted)
+Number PoolPumpRuntimeToday "Pool pump runtime today in minutes [%d]" <settings> (ShouldBePersisted)
+
+// If automatic checking of the water level for operation is needed. 
+// Add a rule which sets this to false if there is not enough water and uncomment the following line
+// Switch EnoughWaterSignalizator "Pool pump signalizator of sufficient water" <switch> (PoolPumpSwitchSerial)
+
+Group:Switch:AND(ON, OFF) PoolPumpSwitchSerial "Pool Pump final proxy" <switch> (ProxiedSwitches)
+    Group:Switch:NAND(ON,OFF) NotManualTurnOff "Not manually turned off" (PoolPumpSwitchSerial)
+    Group:Switch:OR(ON, OFF) PoolPumpSwitchParallel "Pool Pump proxy of various signalizators" <switch> (PoolPumpSwitchSerial)
+        // TOU
+        Switch PoolPumpManual "Pool pump signalizator of manual switching in UI" <switch> (PoolPumpSwitchParallel)
+        
+        Group:Switch:AND(ON, OFF) PoolPumpSwitchAutomaticLimitedByRuntime (PoolPumpSwitchParallel)
+            Switch DailyMaxRuntimeNotReached "Max daily runtime not reached" <switch> (PoolPumpSwitchAutomaticLimitedByRuntime)
+            Group:Switch:OR(ON, OFF) PoolPumpAutomaticSignalizator (PoolPumpSwitchAutomaticLimitedByRuntime)
+                // TOU
+                Switch PoolPumpPlan "Time plan signalizator for pool pump operation" (PoolPumpAutomaticSignalizator)
+                // surplus DR
+                Group:Switch:AND(ON, OFF) PoolPumpSurplusAndAllowed (PoolPumpAutomaticSignalizator)
+                Group:Switch:OR(ON, OFF) PoolPumpSurplusSignalizator "Pool pump signalizator of energy surplus" <switch> (PoolPumpSurplusAndAllowed)
+                    Group:Switch:AND(ON, OFF) PoolPumpSignalizatorANDNotHeatingSeason "Pool pump signalizator of energy surplus and heating season" (PoolPumpSurplusSignalizator)
+                        Switch PoolPumpSurplusSignalizatorNotHeatingSeason "Pool pump signalizator of energy surplus via non-heating season thing" <switch> (PoolPumpSignalizatorANDNotHeatingSeason)
+                            { channel="energymanager:signalizator:surplusNotHeating:bazen_filtrace" }
+                    Group:Switch:AND(ON, OFF) PoolPumpSignalizatorANDHeatingSeason "Pool pump signalizator of energy surplus and heating season" (PoolPumpSurplusSignalizator)
+                        Switch PoolPumpSurplusSignalizatorHeatingSeason "Pool pump signalizator of energy surplus via heating season thing" <switch> (PoolPumpSignalizatorANDHeatingSeason)
+                            { channel="energymanager:signalizator:surplusHeating:bazen_filtrace" }
+        
+Switch PoolPumpSwitch "Pool Pump Switch" <switch> (gHome, ShouldBePersisted)
+    { channel="zigbee:device:stick:b43522fffebe6667:B43522FFFEBE6667_1_switch" }

@@ -1,0 +1,33 @@
+-=missing
+NULL=NULL
+
+
+0.0=Wait Mode
+0=Wait Mode
+
+1.0=Check Mode
+1=Check Mode
+
+2.0=Normal Mode
+2=Normal Mode
+
+3.0=Fault Mode
+3=Fault Mode
+
+4.0=Permanent Fault Mode
+4=Permanent Fault Mode
+
+5.0=Update Mode
+5=Update Mode
+
+6.0=EPS check mode
+6.EPS check mode
+
+7.0=EPS mode
+7=EPS mode
+
+8.0=Self Test
+8=Self Test
+
+9.0=Idle Mode
+9=Idle Mode

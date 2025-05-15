@@ -1,0 +1,62 @@
+services:
+  openhab:
+    image: "openhab/openhab:4.3.5"
+    restart: always
+    container_name: openhab
+    network_mode: host
+    volumes:
+    # comment out /etc/localtime and timezone if using NixOS
+    #  - "/etc/localtime:/etc/localtime:ro"
+    #  - "/etc/timezone:/etc/timezone:ro"
+      - "./data/openhab/openhab_conf:/openhab/conf"
+      - "./data/openhab/openhab_userdata:/openhab/userdata"
+      - "./data/openhab/openhab_addons_jar:/openhab/addons_jar"
+    environment:
+      CRYPTO_POLICY: "unlimited"
+      EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Berlin -Dgnu.io.rxtx.SerialPorts=/dev/ttyACM0"
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+    # uncomment out if usb connected zigbee gateway is not used
+    # devices:
+    #  - /dev/ttyACM0:/dev/ttyACM0
+    # group_add:
+    #  - tty
+    
+  # if you want to change this config or connect openhab to you own JDBC connectible database,
+  # edit the openhab config in ./data/openhab/template/conf/services/jdbc.cfg 
+  # before running the ./install.sh script
+  # or deal with the consequences (edit the files in the running instance)
+  database:
+    image: 'postgres:latest'
+    container_name: postgres_oh_dms
+    ports:
+      - 5555:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: habopen
+      POSTGRES_DB: postgres
+    volumes:
+    - ./data/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./data/postgres/db-data/:/var/lib/postgresql/data/
+
+  # delete if mqtt is not needed
+  mosquitto:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./data/mosquitto/config:/mosquitto/config:rw
+      - ./data/mosquitto/data:/mosquitto/data:rw
+      - ./data/mosquitto/log:/mosquitto/log:rw
+
+volumes:
+  openhab_addons:
+    driver: local
+  openhab_conf:
+    driver: local
+  openhab_userdata:
+    driver: local

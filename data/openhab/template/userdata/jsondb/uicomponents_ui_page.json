@@ -1,0 +1,3226 @@
+{
+  "2_week_yield": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "2_week_yield",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "Oct 5, 2024, 2:41:18 PM",
+      "component": "oh-chart-page",
+      "config": {
+        "chartType": "",
+        "label": "Výroba dnes",
+        "period": "2W"
+      },
+      "slots": {
+        "dataZoom": [
+          {
+            "component": "oh-chart-datazoom",
+            "config": {
+              "type": "inside"
+            }
+          }
+        ],
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "includeLabels": true
+            }
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "bottom": 3.0,
+              "type": "scroll"
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_DailyYield",
+              "name": "Výroba dnes",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          }
+        ],
+        "title": [
+          {
+            "component": "oh-chart-title",
+            "config": {
+              "show": true,
+              "text": "Výroba posledních dvou týdnů"
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "confine": true,
+              "smartFormatter": true
+            }
+          }
+        ],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "name": "kWh"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "admin_settings": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "admin_settings",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:34:15 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "Admin konfigurace",
+        "order": "99",
+        "sidebar": false,
+        "visibleTo": [
+          "role:administrator"
+        ]
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "footer": "Aproximace pokud není tepelná sonda na vstupní trubce bojleru",
+                    "item": "BoilerInputTemperature",
+                    "name": "number",
+                    "required": true,
+                    "sendButton": true,
+                    "title": "Teplota vody na vstupu do bojleru",
+                    "type": "number"
+                  }
+                },
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "action": "toggle",
+                    "actionCommand": "ON",
+                    "actionCommandAlt": "OFF",
+                    "actionItem": "Prediction_manual_recalculation",
+                    "label": "Klikni pro rekalkulaci",
+                    "title": "Manuální rekalkulace všech predikcí"
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "inputmode": "number",
+                    "item": "SpotIntervalLengthMinutes",
+                    "max": 60.0,
+                    "min": 1.0,
+                    "sendButton": true,
+                    "title": "Délka intervalu platnosti spot ceny [minuty]",
+                    "type": "number",
+                    "validate": true
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "inputmode": "number",
+                    "item": "PanelEfficiency",
+                    "max": 40.0,
+                    "min": 1.0,
+                    "sendButton": true,
+                    "title": "Účinnost solárních panelů [%]",
+                    "type": "number",
+                    "validate": true
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "inputmode": "number",
+                    "item": "UserDefinedSolarPredictionCoefficient",
+                    "max": 1.0,
+                    "min": 0.6,
+                    "sendButton": true,
+                    "title": "Koeficient predikce",
+                    "type": "number",
+                    "validate": true
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "appliance_states": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "appliance_states",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:43:16 PM",
+      "component": "oh-chart-page",
+      "config": {
+        "label": "Graf stavu spínačů spotřebičů",
+        "period": "D",
+        "sidebar": false
+      },
+      "slots": {
+        "dataZoom": [],
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "10%",
+              "top": "10%"
+            }
+          },
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "10%",
+              "top": "20%"
+            }
+          },
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "10%",
+              "top": "30%"
+            }
+          },
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "10%",
+              "top": "40%"
+            }
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "show": true
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "HeatPumpSwitch",
+              "name": "Provoz TČ",
+              "type": "scatter",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "HeatPumpSwitch",
+                    "name": "Provoz TČ"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 1.0,
+              "name": "Provoz boileru",
+              "type": "scatter",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "BoilerSwitch",
+                    "name": "Provoz boileru"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 1.0,
+              "name": "Provoz průtokového čerpadla",
+              "type": "scatter",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "CirculationSwitch",
+                    "name": "Provoz průtokového čerpadla"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 2.0,
+              "name": "Provoz filtrace bazénu",
+              "type": "scatter",
+              "xAxisIndex": 2.0,
+              "yAxisIndex": 2.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "PoolPumpSwitch",
+                    "name": "Provoz filtrace bazénu"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 3.0,
+              "item": "gSystemPowerSum",
+              "name": "Spotřeba domácnosti",
+              "type": "bar",
+              "xAxisIndex": 3.0,
+              "yAxisIndex": 3.0
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "show": true
+            }
+          }
+        ],
+        "visualMap": [],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 1.0
+            }
+          },
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 2.0
+            }
+          },
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 3.0
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 1.0
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 2.0
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 3.0,
+              "min": "0",
+              "name": "Výkon [W]",
+              "nameGap": 50.0,
+              "nameLocation": "center",
+              "scale": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "batteries": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "batteries",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "Apr 30, 2025, 10:12:43 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "batteries"
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-knob-card",
+                  "config": {
+                    "handleShape": "round",
+                    "item": "Solax_SelfUseMinSOC",
+                    "lineCap": "round",
+                    "max": 100.0,
+                    "min": 10.0,
+                    "releaseOnly": true,
+                    "responsive": true,
+                    "step": 5.0,
+                    "title": "Minimální nabití baterie [%]"
+                  }
+                },
+                {
+                  "component": "oh-knob-card",
+                  "config": {
+                    "handleShape": "round",
+                    "item": "Solax_MaxSOC",
+                    "lineCap": "round",
+                    "max": 100.0,
+                    "min": 10.0,
+                    "releaseOnly": true,
+                    "step": 5.0,
+                    "title": "Maximální nabití baterie [%]"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "boiler_temperatures": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "boiler_temperatures",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:40:27 PM",
+      "component": "oh-chart-page",
+      "config": {
+        "label": "Graf teplot v akumulační nádrži",
+        "order": "5",
+        "period": "12h",
+        "sidebar": false
+      },
+      "slots": {
+        "dataZoom": [
+          {
+            "component": "oh-chart-datazoom",
+            "config": {
+              "orient": "horizontal",
+              "show": true,
+              "type": "inside"
+            }
+          }
+        ],
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "35%",
+              "top": "35%"
+            }
+          },
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "20%",
+              "top": "75%"
+            }
+          },
+          {
+            "component": "oh-chart-grid",
+            "config": {
+              "containLabel": false,
+              "height": "15%",
+              "top": "15%"
+            }
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "left": "5",
+              "orient": "vertical",
+              "show": true,
+              "top": "15"
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "BoilerSwitch",
+              "name": "Provoz bojleru",
+              "type": "scatter",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "BoilerSwitch",
+                    "name": "Provoz bojleru"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 1.0,
+              "item": "CirculationSwitch",
+              "name": "Provoz oběhového čerpadla",
+              "type": "scatter",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "CirculationSwitch",
+                    "name": "Provoz oběhového čerpadla"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 1.0,
+              "name": "Provoz TČ",
+              "type": "scatter",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            },
+            "slots": {
+              "markArea": [
+                {
+                  "component": "oh-mark-area",
+                  "config": {
+                    "item": "HeatPumpSwitch",
+                    "name": "Provoz TČ"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 2.0,
+              "item": "BoilerSOC",
+              "name": "SOC bojleru",
+              "type": "line",
+              "xAxisIndex": 2.0,
+              "yAxisIndex": 2.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "TemperatureBoilerTop3",
+              "markPoint": {
+                "data": [
+                  {
+                    "name": "min",
+                    "type": "min"
+                  }
+                ],
+                "label": {
+                  "backgroundColor": "auto"
+                }
+              },
+              "name": "Teplota horní 3",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "TemperatureBoilerTop4",
+              "name": "Teplota horní 4",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "TemperatureBoilerTop5",
+              "name": "Teplota horní 5",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "TemperatureBoilerTop6",
+              "name": "Teplota horní 6",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "item": "TemperatureBoilerBottom1",
+              "name": "Bojler spodní 1",
+              "type": "line",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 1.0,
+              "item": "TemperatureBoilerBottom2",
+              "markPoint": {
+                "data": [
+                  {
+                    "name": "min",
+                    "type": "min"
+                  },
+                  {
+                    "name": "max",
+                    "type": "max"
+                  }
+                ],
+                "label": {
+                  "backgroundColor": "auto"
+                }
+              },
+              "name": "Boiler spodní 2",
+              "type": "line",
+              "xAxisIndex": 1.0,
+              "yAxisIndex": 1.0
+            }
+          }
+        ],
+        "title": [
+          {
+            "component": "oh-chart-title",
+            "config": {
+              "left": "center",
+              "show": true,
+              "text": "Graf teplot akumulační nádrže",
+              "top": "top"
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "orient": "vertical",
+              "show": true
+            }
+          }
+        ],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 1.0
+            }
+          },
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 2.0
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "scale": true
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 1.0,
+              "scale": true
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 2.0,
+              "scale": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "consumption_overview": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "consumption_overview",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:31:08 PM",
+      "component": "oh-chart-page",
+      "config": {
+        "label": "Přehled spotřeby",
+        "order": "2",
+        "period": "D",
+        "sidebar": false
+      },
+      "slots": {
+        "dataZoom": [
+          {
+            "component": "oh-chart-datazoom",
+            "config": {
+              "show": true,
+              "type": "inside",
+              "xAxisIndex": [
+                0.0
+              ]
+            }
+          }
+        ],
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {}
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "left": "0%",
+              "orient": "vertical",
+              "show": true,
+              "top": "5%"
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "gPowerDC",
+              "markPoint": {
+                "data": [
+                  {
+                    "name": "max",
+                    "type": "max"
+                  }
+                ],
+                "label": {
+                  "backgroundColor": "auto"
+                }
+              },
+              "name": "Výkon z FVE",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_FeedInPower",
+              "name": "Spotřeba ze/do sítě",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "gPowerTotal",
+              "name": "Celková spotřeba",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_BatterySOC",
+              "markPoint": {
+                "data": [
+                  {
+                    "name": "min",
+                    "type": "min"
+                  },
+                  {
+                    "name": "max",
+                    "type": "max"
+                  }
+                ],
+                "label": {
+                  "backgroundColor": "auto"
+                }
+              },
+              "name": "SOC batterie",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 1.0
+            }
+          }
+        ],
+        "title": [
+          {
+            "component": "oh-chart-title",
+            "config": {
+              "left": "center",
+              "show": true,
+              "text": "Přehled spotřeby"
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "confine": true,
+              "orient": "horizontal",
+              "show": true
+            }
+          }
+        ],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "nameGap": 1.0,
+              "nameLocation": "center"
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "name": "Výkon [W]",
+              "nameGap": 50.0,
+              "nameLocation": "center"
+            }
+          },
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "max": "100",
+              "min": "0",
+              "name": "SOC baterie [%]",
+              "nameGap": 50.0,
+              "nameLocation": "center"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "day_energy_flow": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "day_energy_flow",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 11:44:22 AM",
+      "component": "oh-chart-page",
+      "config": {
+        "label": "Energtické toky dne"
+      },
+      "slots": {
+        "calendar": [],
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {}
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "left": "10%",
+              "orient": "vertical",
+              "show": true,
+              "top": "7%"
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_ConsumeFromGridToday",
+              "name": "Spotřeba ze sítě [kWh]",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "gDayConsumption",
+              "name": "Spotřeba domácnosti celkem [kWh]",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_SolarEnergyToday",
+              "name": "Výroba FVE [kWh]",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_BatteryOutputEnergyToday",
+              "name": "Využito z BESS [kWh]",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_BatteryInputEnergyToday",
+              "name": "Uloženo do BESS [kWh]",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          }
+        ],
+        "title": [],
+        "toolbox": [
+          {
+            "component": "oh-chart-toolbox",
+            "config": {
+              "show": true
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "show": true
+            }
+          }
+        ],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "name": "Čas [den v měsíci]",
+              "nameGap": 30.0,
+              "nameLocation": "center"
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0,
+              "min": "0",
+              "name": "Výkon [kWh]",
+              "nameGap": 30.0,
+              "nameLocation": "center",
+              "scale": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fve_system": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "fve_system",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 11, 2025, 12:01:42 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "FVE System",
+        "order": "1",
+        "sidebar": true
+      },
+      "slots": {
+        "canvas": [],
+        "default": [
+          {
+            "component": "oh-block",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-grid-cells",
+                  "config": {},
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionModal": "page:consumption_overview",
+                          "actionPage": "page:consumption_overview",
+                          "actionPageTransition": "f7-cover-v",
+                          "expandable": false,
+                          "icon": "material:auto_graph",
+                          "label": "Graf spotřeby",
+                          "trendGradientDirection": "left",
+                          "trendItem": "gPowerTotal",
+                          "trendSampling": 5.0
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Tok energie domácnosti"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_FeedInPower"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_FeedInPower",
+                          "title": "Výkon --z/do++ sítě"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gPowerTotal"
+                          ],
+                          "expandable": false,
+                          "item": "gPowerTotal",
+                          "stateAsHeader": true,
+                          "title": "Spotřeba domácnosti",
+                          "trendItem": "gPowerTotal",
+                          "trendSampling": 5.0
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "Solax_ExportControlUserLimit",
+                          "title": "Povolený výkon dodávaný do sítě"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "FVE system"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatterySOC"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_BatterySOC",
+                          "title": "Nabití baterie"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatteryPowerCharge"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_BatteryPowerCharge",
+                          "title": "Výkon --z/do++ baterie"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gPowerDC"
+                          ],
+                          "expandable": false,
+                          "item": "gPowerDC",
+                          "title": "Výkon panelů"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_ACPower"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_ACPower",
+                          "title": "Výkon systému"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Dnešní agregace"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_FeedinEnergyToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_FeedinEnergyToday",
+                          "stateAsHeader": true,
+                          "title": "Dodávka do sítě",
+                          "trendItem": "Solax_FeedinEnergyToday"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_ConsumeFromGridToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_ConsumeFromGridToday",
+                          "stateAsHeader": true,
+                          "title": "Spotřeba ze sítě",
+                          "trendItem": "Solax_ConsumeFromGridToday"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_DailyYield"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_DailyYield",
+                          "stateAsHeader": true,
+                          "title": "Z FVE a baterií dnes",
+                          "trendItem": "Solax_DailyYield"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gDayConsumption"
+                          ],
+                          "expandable": false,
+                          "item": "gDayConsumption",
+                          "stateAsHeader": true,
+                          "title": "Celková spotřeba",
+                          "trendItem": "gDayConsumption"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Predikce výroby"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Predicted_energy_today_total"
+                          ],
+                          "expandable": false,
+                          "item": "Predicted_energy_today_total",
+                          "stateAsHeader": true,
+                          "title": "Celkem dnes",
+                          "trendItem": "Predicted_energy_today_total"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Predicted_energy_tomorrow_total"
+                          ],
+                          "expandable": false,
+                          "item": "Predicted_energy_tomorrow_total",
+                          "stateAsHeader": true,
+                          "title": "Celkem zítra",
+                          "trendItem": "Predicted_energy_tomorrow_total"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Vypočítané hodnoty pro pravidla"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "TimeToDischargeByCurrentLoad"
+                          ],
+                          "expandable": false,
+                          "item": "TimeToDischargeByCurrentLoad",
+                          "title": "Doba vybití ESS při současné spotřebě"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "TimeToDischargeByBaseline"
+                          ],
+                          "expandable": false,
+                          "item": "TimeToDischargeByBaseline",
+                          "title": "Doba do vybití ESS při baseline spotřebě"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "HouseBaselineWattage"
+                          ],
+                          "expandable": false,
+                          "item": "HouseBaselineWattage",
+                          "title": "Vypočítaná baseline spotřeba domácnosti"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "heatpump": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "heatpump",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 11, 2025, 11:37:32 AM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "TČ správa",
+        "order": "3",
+        "sidebar": true
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "item": "HeatPumpSwitch",
+                    "label": "\u003d((items.VacationMode.state \u003d\u003d \u0027ON\u0027) \u0026\u0026 (items.HeatPumpSwitch.state !\u003d \u0027ON\u0027) ? \u0027OFF (Dovolená)\u0027 : items.HeatPumpSwitch.state)",
+                    "title": "Provoz TČ"
+                  }
+                },
+                {
+                  "component": "oh-toggle-card",
+                  "config": {
+                    "item": "HeatPumpManual",
+                    "title": "Manuální septnuí TČ"
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "mediaList": true,
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "HeatPumpAutoMinESSSOC",
+                          "label": true,
+                          "max": 100.0,
+                          "min": 0.0,
+                          "releaseOnly": true,
+                          "scale": true,
+                          "step": 1.0,
+                          "title": "Minimální SOC auto spuštění TČ "
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "MaxTemperatureOutside",
+                          "label": true,
+                          "max": 25.0,
+                          "min": 0.0,
+                          "scale": true,
+                          "step": 1.0,
+                          "title": "Maximální venkovní teplota pro auto spuštění TČ"
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "MaxHomeTemperature",
+                          "label": true,
+                          "max": 30.0,
+                          "min": 15.0,
+                          "scale": true,
+                          "scaleSteps": 3.0,
+                          "title": "Maximální teplota domácnosti pro auto spuštění TČ"
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "MinHomeTemperature",
+                          "label": true,
+                          "max": 30.0,
+                          "min": 15.0,
+                          "scale": true,
+                          "scaleSteps": 3.0,
+                          "title": "Minimální teplota domácnosti"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "HeatPumpTemperatureSignalizator",
+                          "title": "Signalizátor plnění teplot"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "HeatPumpSurplusSignalizator",
+                          "title": "Signalizátor přebytku"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "item": "TemperatureOutside",
+                    "title": "Venkovní teplota"
+                  }
+                },
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "item": "TemperatureLivingroom",
+                    "title": "Teplota domácnosti"
+                  }
+                },
+                {
+                  "component": "oh-toggle-card",
+                  "config": {
+                    "item": "HeatingSeason",
+                    "title": "Topná sezóna"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "home": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "home",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 3, 2025, 1:20:51 PM",
+      "component": "oh-home-page",
+      "config": {
+        "label": "Home Page"
+      },
+      "slots": {}
+    }
+  },
+  "invertor": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "invertor",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:37:45 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "Nastavení Invertoru"
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "action": "toggle",
+                    "actionCommand": "ON",
+                    "actionCommandAlt": "OFF",
+                    "actionItem": "Solax_LockSwitch",
+                    "background": "\u003d(items[\"Solax_LockSTATE\"].state \u003d\u003d 0?\"red\":\"green\")",
+                    "color": "blue",
+                    "footer": "Nastavovat maximální a minimální SOC baterie je možné pouze pokud je invertor ve stavu Unlocked.",
+                    "icon": "\u003d(items[\"Solax_LockSTATE\"].state \u003d\u003d 0 ?(items[\"Solax_LockSwitch\"].state\u003d\u003d\"OFF\" ?\"material:lock_outline\" :\"f7:download_circle\"):(items[\"Solax_LockSwitch\"].state\u003d\u003d\"ON\" ? \"material:lock_open\" :\"f7:download_circle\"))",
+                    "iconUseState": true,
+                    "item": "Solax_LockSwitch",
+                    "label": "\u003d@\"Solax_LockSTATE\"",
+                    "stateAsHeader": true,
+                    "title": "Odemknout/uzamknout invertor"
+                  }
+                },
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "item": "FirmwareVersion",
+                    "title": "Verze firmware"
+                  }
+                },
+                {
+                  "component": "oh-knob-card",
+                  "config": {
+                    "handleShape": "round",
+                    "item": "Solax_SelfUseMinSOC",
+                    "lineCap": "round",
+                    "max": 100.0,
+                    "min": 10.0,
+                    "releaseOnly": true,
+                    "responsive": true,
+                    "step": 5.0,
+                    "title": "Minimální nabití baterie [%]"
+                  }
+                },
+                {
+                  "component": "oh-knob-card",
+                  "config": {
+                    "handleShape": "round",
+                    "item": "Solax_MaxSOC",
+                    "lineCap": "round",
+                    "max": 100.0,
+                    "min": 10.0,
+                    "releaseOnly": true,
+                    "step": 5.0,
+                    "title": "Maximální nabití baterie [%]"
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "mediaList": true,
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "ESS2EVEnabled",
+                          "title": "Povolit nabíjení BEV z baterie"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "AllowPredictiveESSGridChargeDischarge",
+                          "title": "Povolit prediktivní vybíjení/nabíjení"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "AllowPredictiveJITHeating",
+                          "title": "Povolit prediktivní noční ohřev bojleru\u0026TČ"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "SpotDrawMode",
+                          "title": "Dodávky ze sítě podléhají spotovým cenám"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "SpotFeedInMode",
+                          "title": "Dodávky do sítě podléhají spotovým cenám"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "inputmode": "number",
+                          "item": "ESSFromGridPriceThreshold",
+                          "outline": true,
+                          "sendButton": true,
+                          "title": "Max spot cena auto-nabíjení baterie [CZK]",
+                          "type": "number"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "inputmode": "number",
+                          "item": "ESSToGridPriceThreshold",
+                          "outline": true,
+                          "sendButton": true,
+                          "title": "Min spot cena auto-vybíjení baterie [CZK]",
+                          "type": "number"
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "MinESSReserveSOC",
+                          "lineCap": "round",
+                          "max": 100.0,
+                          "min": 10.0,
+                          "releaseOnly": true,
+                          "responsive": true,
+                          "scale": true,
+                          "scaleSteps": 9.0,
+                          "step": 5.0,
+                          "title": "Minimální SOC ESS prediktivního vybíjení [%]"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "defaultValue": "0",
+                          "inputmode": "number",
+                          "item": "MaxGridChargeWattage",
+                          "outline": true,
+                          "required": true,
+                          "sendButton": true,
+                          "title": "Maximální výkon nabíjení baterie ze sítě [W]",
+                          "type": "number",
+                          "useDisplayState": false,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "defaultValue": "0",
+                          "inputmode": "number",
+                          "item": "MaxGridDischargeWattage",
+                          "outline": true,
+                          "required": true,
+                          "sendButton": true,
+                          "title": "Maximální výkon vybíjení baterie do sítě [W]",
+                          "type": "number",
+                          "useDisplayState": false,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "defaultValue": "0",
+                          "inputmode": "number",
+                          "item": "StandardFeedin",
+                          "outline": true,
+                          "required": true,
+                          "sendButton": true,
+                          "title": "Povolené přetoky do sítě [W]",
+                          "type": "number",
+                          "useDisplayState": false,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "clearButton": true,
+                    "inputmode": "number",
+                    "item": "Solax_UserPassword",
+                    "name": "Solax password",
+                    "outline": true,
+                    "required": true,
+                    "sendButton": true,
+                    "title": "Solax password",
+                    "type": "password",
+                    "validate": true
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {},
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "footer": "Zamezuje automatickému provozu z přetoků TČ, boileru a bazénu. Zároveň zamezuje provoz bojleru a cirkulace vody dle TOU.",
+                          "item": "VacationMode",
+                          "title": "Režim dovolená"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "footer": "Povoluje automatický provoz z přetoků TČ, boileru a bazénu i při dovolené",
+                          "item": "AllowSurplusSwitchingDuringVacation",
+                          "title": "Spínat dle přebytků i při dovolené"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "inputmode": "number",
+                    "item": "PanelArea",
+                    "sendButton": true,
+                    "title": "Plocha solárních panelů [m^2]",
+                    "type": "number"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "overview": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "overview",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 8:50:38 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "Overview",
+        "order": "-1",
+        "sidebar": true
+      },
+      "slots": {
+        "canvas": [],
+        "default": [
+          {
+            "component": "oh-block",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-grid-cells",
+                  "config": {},
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionPage": "page:heatpump",
+                          "expandable": false,
+                          "icon": "iconify:material-symbols:heat-pump-balance-outline",
+                          "item": "HeatPumpSwitch",
+                          "label": "\u003d((items.VacationMode.state \u003d\u003d \u0027ON\u0027) \u0026\u0026 (items.HeatPumpSwitch.state !\u003d \u0027ON\u0027)  ? \u0027OFF (Dovolená)\u0027 : items.HeatPumpSwitch.state)",
+                          "subtitle": "Ohřev TČ"
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionPage": "page:time_plan",
+                          "expandable": false,
+                          "footer": "\u003d\u0027Úroveň nahřátí \u0027 + items.BoilerSOC.state + \u0027 %\u0027",
+                          "icon": "iconify:mdi:water-boiler",
+                          "item": "BoilerSwitch",
+                          "label": "\u003d((items.VacationMode.state \u003d\u003d \u0027ON\u0027) \u0026\u0026 (items.BoilerSwitch.state !\u003d \u0027ON\u0027) ? \u0027OFF (Dovolená)\u0027 : items.BoilerSwitch.state)",
+                          "subtitle": "Ohřev bojleru"
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionPage": "page:pool_control",
+                          "expandable": false,
+                          "footer": "\u003d\u0027Dnes běžela \u0027 + items.PoolPumpRuntimeToday.state + \u0027 minut\u0027",
+                          "icon": "iconify:cbi:pool-filter",
+                          "item": "PoolPumpSwitch",
+                          "subtitle": "Filtrace bazénu"
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionModal": "page:appliance_states",
+                          "actionPage": "page:appliance_states",
+                          "actionPageTransition": "f7-cover-v",
+                          "expandable": false,
+                          "icon": "material:auto_graph",
+                          "label": "Stavy spínačů spotřebičů"
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "navigate",
+                          "actionModal": "page:consumption_overview",
+                          "actionPage": "page:consumption_overview",
+                          "actionPageTransition": "f7-cover-v",
+                          "expandable": false,
+                          "icon": "material:auto_graph",
+                          "label": "Spotřeba",
+                          "trendGradientDirection": "left",
+                          "trendItem": "gPowerTotal",
+                          "trendSampling": 5.0
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-grid-cells",
+                  "config": {},
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-gauge-card",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatterySOC"
+                          ],
+                          "borderBgColor": "black",
+                          "borderColor": "\u003d(items[\"Solax_BatterySOC\"].state \u003c (items[\"Solax_SelfUseMinSOC\"].state * 1.3) ?(items[\"Solax_BatterySOC\"].state \u003c\u003d items[\"Solax_SelfUseMinSOC\"].state ?\"red\" :\"orange\" ):\"green\")",
+                          "item": "Solax_BatterySOC",
+                          "title": "Úroveň nabití baterie",
+                          "type": "semicircle",
+                          "valueTextColor": "\u003dthemeOptions.dark \u003d\u003d\u003d \"light\" ? \u0027black\u0027 : \u0027white\u0027"
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gPowerTotal"
+                          ],
+                          "expandable": false,
+                          "icon": "iconify:tabler:home-bolt",
+                          "item": "gPowerTotal",
+                          "stateAsHeader": true,
+                          "subtitle": "Spotřeba domácnosti",
+                          "trendItem": "gPowerTotal",
+                          "trendSampling": 5.0
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gPowerDC"
+                          ],
+                          "expandable": false,
+                          "icon": "iconify:ph:solar-panel-light",
+                          "item": "gPowerDC",
+                          "stateAsHeader": true,
+                          "subtitle": "Výkon panelů",
+                          "trendItem": "gPowerDC",
+                          "trendSampling": 5.0
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatteryPowerCharge"
+                          ],
+                          "expandable": false,
+                          "icon": "\u003ditems.Solax_BatteryPowerCharge.state \u003e 0 ? \u0027iconify:ri:battery-saver-line\u0027 : \u0027iconify:ri:battery-share-line\u0027",
+                          "item": "Solax_BatteryPowerCharge",
+                          "stateAsHeader": true,
+                          "subtitle": "Výkon --z/do++ baterie",
+                          "trendItem": "Solax_BatteryPowerCharge",
+                          "trendSampling": 5.0
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_FeedInPower"
+                          ],
+                          "expandable": false,
+                          "icon": "\u003d(items.Solax_FeedInPower.state \u003e 0 ? \u0027iconify:mdi:energy-to-grid\u0027 : \u0027iconify:mdi:energy-from-grid\u0027)",
+                          "item": "Solax_FeedInPower",
+                          "stateAsHeader": true,
+                          "subtitle": "Výkon --z/do++ sítě",
+                          "trendItem": "Solax_FeedInPower",
+                          "trendSampling": 5.0
+                        }
+                      },
+                      {
+                        "component": "oh-label-cell",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_ACPower"
+                          ],
+                          "expandable": false,
+                          "icon": "iconify:iconoir:web-window-energy-consumption",
+                          "item": "Solax_ACPower",
+                          "stateAsHeader": true,
+                          "subtitle": "Výkon měniče",
+                          "trendItem": "Solax_ACPower",
+                          "trendSampling": 5.0
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Předpovědi počasí"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-card",
+                        "config": {
+                          "title": "Dnes"
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Predicted_energy_today_value"
+                                ],
+                                "expandable": false,
+                                "item": "Predicted_energy_today_value",
+                                "title": "Solární potenciál"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Predicted_energy_today_total"
+                                ],
+                                "expandable": false,
+                                "item": "Predicted_energy_today_total",
+                                "title": "Výroba"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Predicted_energy_today_total"
+                                ],
+                                "expandable": false,
+                                "item": "WeatherDayTemperature_today",
+                                "title": "Denní teplota"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_condition_today",
+                                "title": "Slovní předpověď"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Weather_cloudiness_today"
+                                ],
+                                "expandable": false,
+                                "item": "Weather_cloudiness_today",
+                                "title": "Míra oblačnosti"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Weather_cloudiness_today"
+                                ],
+                                "expandable": false,
+                                "item": "Weather_precipitation_today",
+                                "title": "Pravděpodobnost srážek"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Weather_rain_today"
+                                ],
+                                "expandable": false,
+                                "item": "Weather_rain_today",
+                                "title": "Srážky"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "action": "analyzer",
+                                "actionAnalyzerItems": [
+                                  "Weather_snow_today"
+                                ],
+                                "expandable": false,
+                                "item": "Weather_snow_today",
+                                "title": "Sníh"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "PredictionsToday",
+                                "title": "Stav předpovědi"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "oh-list-card",
+                        "config": {
+                          "title": "Zítra"
+                        },
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Predicted_energy_tomorrow_value",
+                                "title": "Solární potenciál"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Predicted_energy_tomorrow_total",
+                                "title": "Výroba"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "WeatherDayTemperature_tomorrow",
+                                "title": "Denní teplota"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_condition_tomorrow",
+                                "title": "Slovní předpověď"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_cloudiness_tomorrow",
+                                "title": "Míra oblačnosti"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_precipitation_tomorrow",
+                                "title": "Pravděpodobnost srážek"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_rain_tomorrow",
+                                "title": "Srážky"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "Weather_snow_tomorrow",
+                                "title": "Sníh"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "PredictionsTomorrow",
+                                "title": "Stav předpovědi"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Energetické toky dnes"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_ConsumeFromGridToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_ConsumeFromGridToday",
+                          "title": "Spotřeba ze sítě"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_FeedinEnergyToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_FeedinEnergyToday",
+                          "title": "Dodávka do sítě"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatteryOutputEnergyToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_BatteryOutputEnergyToday",
+                          "title": "Energie z BESS"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_BatteryInputEnergyToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_BatteryInputEnergyToday",
+                          "title": "Energie do BESS"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_SolarEnergyToday"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_SolarEnergyToday",
+                          "title": "Výroba FVE"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "gDayConsumption"
+                          ],
+                          "expandable": false,
+                          "item": "gDayConsumption",
+                          "title": "Celková spotřeba"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Vnitrodenní trh aktuálně"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Spot_price_current_czk"
+                          ],
+                          "expandable": false,
+                          "item": "Spot_price_current_czk",
+                          "title": "Cena 1 kWh"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Spot_price_hour_level"
+                          ],
+                          "expandable": false,
+                          "item": "Spot_price_hour_level",
+                          "title": "Cennová úroveň"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "action": "analyzer",
+                          "actionAnalyzerItems": [
+                            "Solax_ExportControlUserLimit"
+                          ],
+                          "expandable": false,
+                          "item": "Solax_ExportControlUserLimit",
+                          "title": "Současný limit přetoků"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "pool_control": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "pool_control",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:26:10 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "Bazén správa",
+        "order": "6",
+        "sidebar": true
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "item": "PoolPumpSwitch",
+                    "title": "Provoz filtrace bazénu"
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {},
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "PoolPumpManual",
+                          "title": "Manuální sepnutí filtrace"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "ManualTurnOff",
+                          "title": "Manuální zakázání běhu filtrace"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-input-card",
+                  "config": {
+                    "footer": "Ovlivňuje maximální dobu běhu podle plánu a přebytku",
+                    "item": "PoolPumpMaxDailyRuntime",
+                    "name": "number",
+                    "required": true,
+                    "sendButton": true,
+                    "title": "Maximální doba automatického běhu [min]",
+                    "type": "number"
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "accordionList": false,
+                    "mediaList": true,
+                    "simpleList": false
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "PoolPumpPlanENABLE",
+                          "title": "Povolit plán filtrace"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "inputmode": "text",
+                          "item": "PoolPumpPlanSTART",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "title": "START plánu",
+                          "type": "time",
+                          "useDisplayState": true
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "clearButton": false,
+                          "item": "PoolPumpPlanEND",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "showTime": true,
+                          "title": "Konec plánu",
+                          "type": "time",
+                          "useDisplayState": true,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "PoolPumpPlan",
+                          "title": "Signalizátor plánu"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "predictions": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "predictions",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 8, 2025, 1:19:22 PM",
+      "component": "oh-chart-page",
+      "config": {
+        "label": "Graf předpovědi osvitu",
+        "order": "",
+        "period": "3D",
+        "sidebar": false,
+        "visibleTo": [
+          "role:administrator"
+        ]
+      },
+      "slots": {
+        "grid": [
+          {
+            "component": "oh-chart-grid",
+            "config": {}
+          }
+        ],
+        "legend": [
+          {
+            "component": "oh-chart-legend",
+            "config": {
+              "show": true
+            }
+          }
+        ],
+        "series": [
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Predicted_energy_today_total",
+              "name": "Predikce dnes",
+              "service": "jdbc",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Solax_DailyYield",
+              "name": "Daily Yield",
+              "service": "jdbc",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          },
+          {
+            "component": "oh-time-series",
+            "config": {
+              "gridIndex": 0.0,
+              "item": "Predicted_energy_tomorrow_total",
+              "name": "Predikce z předchozího dne",
+              "offsetAmount": 1.0,
+              "offsetUnit": "day",
+              "type": "line",
+              "xAxisIndex": 0.0,
+              "yAxisIndex": 0.0
+            }
+          }
+        ],
+        "title": [
+          {
+            "component": "oh-chart-title",
+            "config": {
+              "show": true,
+              "text": "Predikce výroby vs reálná výroba"
+            }
+          }
+        ],
+        "tooltip": [
+          {
+            "component": "oh-chart-tooltip",
+            "config": {
+              "confine": false,
+              "orient": "vertical",
+              "show": true
+            }
+          }
+        ],
+        "xAxis": [
+          {
+            "component": "oh-time-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          }
+        ],
+        "yAxis": [
+          {
+            "component": "oh-value-axis",
+            "config": {
+              "gridIndex": 0.0
+            }
+          }
+        ]
+      }
+    }
+  },
+  "pv_system": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "pv_system",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:34:22 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "debug",
+        "sidebar": false,
+        "visibleTo": [
+          "role:administrator"
+        ]
+      },
+      "slots": {
+        "canvas": [],
+        "default": [],
+        "grid": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Signalizátory bojleru"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-card",
+                        "config": {},
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerTargetTemperatureNotReached",
+                                "title": "Singalizátor možnosti ohřevu"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerSwitchParallel",
+                                "title": "Signalizátor poptávky ohřevu"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "NotVacationMode",
+                                "title": "Signalizátor že není čas dovolené"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "oh-list-card",
+                        "config": {},
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerManual",
+                                "title": "Signalizátor manuálního sepnutí"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerSurplusSignalizator",
+                                "title": "Signalizátor přebytku energie"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "MinimalTemperatureDuringTOUSerial",
+                                "title": "Signalizátor poptávky dle plánu a teploty"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerWeatherPredictionsSignalizator",
+                                "title": "Signalizátor nočního přebytku dle předpovědi"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "component": "oh-list-card",
+                        "config": {},
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerMinimalTempNotReachedSignalizator",
+                                "title": "Signalizátor poptávky po ohřevy podle min teplot plánu"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerPlanAnySignalizator",
+                                "title": "Signalizátor plnění kteréhokoliv plánu"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "title": "Signalizátory přebytku"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-card",
+                        "config": {},
+                        "slots": {
+                          "default": [
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "BoilerSurplusSignalizator",
+                                "title": "Boiler signalitázor přebytku"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "HeatPumpSurplusSignalizator",
+                                "title": "TČ Signalizátor přebytku"
+                              }
+                            },
+                            {
+                              "component": "oh-label-item",
+                              "config": {
+                                "item": "PoolPumpSurplusSignalizator",
+                                "title": "Filtrace signalizátor přebytku"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "settings": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "settings",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 11, 2025, 7:42:58 PM",
+      "component": "oh-tabs-page",
+      "config": {
+        "label": "Nastavení",
+        "order": "999",
+        "sidebar": true,
+        "visibleTo": [
+          "role:administrator"
+        ]
+      },
+      "slots": {
+        "default": [
+          {
+            "component": "oh-tab",
+            "config": {
+              "icon": "material:settings",
+              "page": "page:invertor",
+              "title": "Setup"
+            },
+            "slots": {
+              "default": []
+            }
+          },
+          {
+            "component": "oh-tab",
+            "config": {
+              "icon": "f7:squares_below_rectangle",
+              "page": "page:pv_system",
+              "title": "debug"
+            },
+            "slots": {
+              "default": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "time_plan": {
+    "class": "org.openhab.core.ui.components.RootUIComponent",
+    "value": {
+      "uid": "time_plan",
+      "tags": [],
+      "props": {
+        "parameters": [],
+        "parameterGroups": []
+      },
+      "timestamp": "May 14, 2025, 7:26:00 PM",
+      "component": "oh-layout-page",
+      "config": {
+        "label": "Bojler správa",
+        "order": "4",
+        "sidebar": true,
+        "title": "Configure Time Plan"
+      },
+      "slots": {
+        "default": [],
+        "masonry": [
+          {
+            "component": "oh-masonry",
+            "config": {},
+            "slots": {
+              "default": [
+                {
+                  "component": "oh-label-card",
+                  "config": {
+                    "iconUseState": true,
+                    "item": "BoilerSwitch",
+                    "label": "\u003d((items.VacationMode.state \u003d\u003d \u0027ON\u0027) \u0026\u0026 (items.BoilerSwitch.state !\u003d \u0027ON\u0027) ? \u0027OFF (Dovolená)\u0027 : items.BoilerSwitch.state)",
+                    "title": "Ohřev bojleru"
+                  }
+                },
+                {
+                  "component": "oh-toggle-card",
+                  "config": {
+                    "item": "BoilerManual",
+                    "title": "Manuální ohřev mimo plán"
+                  }
+                },
+                {
+                  "component": "oh-slider-card",
+                  "config": {
+                    "item": "BoilerTargetTemperature",
+                    "label": true,
+                    "max": 90.0,
+                    "min": 20.0,
+                    "releaseOnly": true,
+                    "scale": true,
+                    "scaleSteps": 7.0,
+                    "title": "Maximální teplota bojleru"
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "accordionList": false,
+                    "mediaList": true,
+                    "simpleList": false,
+                    "title": "Boiler TOU 1"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "BoilerPlan1ENABLE",
+                          "title": "Povolit plán bojleru"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "inputmode": "text",
+                          "item": "BoilerPlan1START",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "title": "START Perioda 1",
+                          "type": "time",
+                          "useDisplayState": true
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "clearButton": false,
+                          "item": "BoilerPlan1END",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "showTime": true,
+                          "title": "END Perioda 1",
+                          "type": "time",
+                          "useDisplayState": true,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "BoilerPlan1MINTEMPMinTempProxy",
+                          "label": true,
+                          "max": 90.0,
+                          "min": 20.0,
+                          "releaseOnly": true,
+                          "scale": true,
+                          "scaleSteps": 7.0,
+                          "title": "Minimální teplota bojleru při platnosti plánu"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "BoilerPlan1",
+                          "title": "Signalizátor plánu"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "accordionList": false,
+                    "mediaList": true,
+                    "simpleList": false,
+                    "title": "Boiler TOU 2"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "BoilerPlan2ENABLE",
+                          "title": "Povolit plán bojleru"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "clearButton": false,
+                          "iconUseState": true,
+                          "inputmode": "text",
+                          "item": "BoilerPlan2START",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "showTime": true,
+                          "title": "START Perioda 2",
+                          "type": "time",
+                          "useDisplayState": true,
+                          "validate": false,
+                          "validate-on-blur": false
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "clearButton": false,
+                          "item": "BoilerPlan2END",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "showTime": true,
+                          "title": "END Perioda 2",
+                          "type": "time",
+                          "useDisplayState": true,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "BoilerPlan2MINTEMPMinTempProxy",
+                          "label": true,
+                          "max": 90.0,
+                          "min": 20.0,
+                          "releaseOnly": true,
+                          "scale": true,
+                          "scaleSteps": 7.0,
+                          "title": "Minimální teplota bojleru při platnosti plánu"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "BoilerPlan2",
+                          "title": "Signalizátor plánu"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "accordionList": false,
+                    "mediaList": true,
+                    "noShadow": false,
+                    "simpleList": true,
+                    "title": "Teploty akumulační nádrže"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-list-item",
+                        "config": {
+                          "action": "navigate",
+                          "actionModalConfig": {},
+                          "actionPage": "page:boiler_temperatures",
+                          "listButton": true,
+                          "title": "Přejít na graf teplot v nádrži"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "BoilerSOC",
+                          "title": "SOC horní nádrže "
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "BoilerPredictedTimeToHeat",
+                          "title": "Čas do max nahřátí"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "BoilerPredictedHeatRate",
+                          "title": "Tempo nárůstu SOC"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerTop6",
+                          "title": "Nádrž horní 6"
+                        },
+                        "slots": {
+                          "accordion": []
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerTop5",
+                          "title": "Nádrž horní 5"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerTop4",
+                          "title": "Nádrž horní 4"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerTop3",
+                          "title": "Nádrž horní 3"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerBottom2",
+                          "title": "Nádrž spodní 2"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "TemperatureBoilerBottom1",
+                          "title": "Nádrž spodní 1"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "oh-list-card",
+                  "config": {
+                    "mediaList": true,
+                    "title": "Oběhové čerpadlo TOU"
+                  },
+                  "slots": {
+                    "default": [
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "CirculationSwitch",
+                          "label": "\u003d((items.VacationMode.state \u003d\u003d \u0027ON\u0027) \u0026\u0026 (items.CirculationSwitch.state !\u003d \u0027ON\u0027) ? \u0027OFF (Dovolená)\u0027 : items.CirculationSwitch.state)",
+                          "title": "Provoz oběhového čerpadla"
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "CirculationTemperatureCurrent",
+                          "title": "Teplota sondy"
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "CirculationThresholdTemperature",
+                          "label": true,
+                          "max": 60.0,
+                          "min": 0.0,
+                          "scale": true,
+                          "scaleSteps": 6.0,
+                          "step": 1.0,
+                          "title": "Minimální teplota navracené vody"
+                        }
+                      },
+                      {
+                        "component": "oh-slider-item",
+                        "config": {
+                          "item": "CirculationThresholdIncrease",
+                          "label": true,
+                          "max": 5.0,
+                          "min": 0.0,
+                          "scale": true,
+                          "scaleSteps": 10.0,
+                          "step": 0.25,
+                          "title": "Kritická hodnota zvýšení teploty sondy pro vypnutí"
+                        }
+                      },
+                      {
+                        "component": "oh-toggle-item",
+                        "config": {
+                          "item": "CirculationPlanENABLE",
+                          "title": "Povolit plán oběhového čerpadla"
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "inputmode": "text",
+                          "item": "CirculationPlanSTART",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "title": "Start plánu",
+                          "type": "time",
+                          "useDisplayState": true
+                        }
+                      },
+                      {
+                        "component": "oh-input-item",
+                        "config": {
+                          "clearButton": false,
+                          "item": "CirculationPlanEND",
+                          "max": "23:59",
+                          "min": "00:00",
+                          "outline": true,
+                          "pattern": "[0-9]{2}:[0-9]{2}",
+                          "sendButton": true,
+                          "showTime": true,
+                          "title": "Konec plánu",
+                          "type": "time",
+                          "useDisplayState": true,
+                          "validate": true,
+                          "validate-on-blur": true
+                        }
+                      },
+                      {
+                        "component": "oh-label-item",
+                        "config": {
+                          "item": "CirculationSwitchParallel",
+                          "title": "Stav podle plánu oběhového čerpadla nebo bojleru"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

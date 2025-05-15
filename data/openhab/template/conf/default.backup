@@ -1,0 +1,12 @@
+// Overarching group
+Group House
+Group Garden
+// Location perspective
+Group GroundFloor  	(House)
+Group Livingroom   	(GroundFloor)
+Group Bedroom 		(GroundFloor)
+// Functional perspective
+Group Sensors      	(House)
+Group FVE 		  	(House)
+Group Pool			(Garden)
+

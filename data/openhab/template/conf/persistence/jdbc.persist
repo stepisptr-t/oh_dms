@@ -1,0 +1,10 @@
+Strategies {
+    restoreOnStartup
+    everyChange
+}
+
+Items {
+    ShouldBePersisted : strategy = restoreOnStartup, everyChange
+    ShouldBePersistedSolar : strategy = restoreOnStartup, everyChange
+    ShouldBePersistedPredictions : strategy = restoreOnStartup, everyChange
+}

@@ -1,0 +1,21 @@
+-=missing
+NULL=NULL
+
+
+0.0=Self use
+0=Self use
+
+1.0=Feed-in priority
+1=Feed-in priority
+
+2.0=Backup
+2=Backup
+
+3.0=Manual
+3=Manual
+
+4.0=Peak shaving
+4=Peak shaving
+
+5.0=TOU Mode
+5=TOU Mode

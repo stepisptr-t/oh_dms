@@ -1,0 +1,49 @@
+Thing http:url:electricity_prediction_tomorrow "Predicted yield tomorrow" [
+	baseURL = "https://www.pvforecast.cz/api/?key=<PVF_API_KEY>&lat=<LATITUDE>&lon=<LONGITUDE>&format=json&type=day&number=1&start=tomorrow",
+	refresh = 3600,
+	stateMethod = "GET",
+	contentType = "application/json"
+] {
+	Channels:
+		Type datetime : date "Date of predicted yield" [stateTransformation="JS:pvforecast-datetime.js"]
+		Type number : value "Predicted yield" [stateTransformation="JSONPATH:$[0][1]"]
+}
+
+Thing http:url:electricity_prediction_today "Predicted yield today" [
+	baseURL = "https://www.pvforecast.cz/api/?key=<PVF_API_KEY>&lat=<LATITUDE>&lon=<LONGITUDE>&format=json&type=day&number=1&start=today",
+	refresh = 3600,
+	stateMethod = "GET",
+	contentType = "application/json"
+] {
+	Channels:
+		Type datetime : date "Date of predicted yield" [stateTransformation="JS:pvforecast-datetime.js"]
+		Type number : value "Predicted yield" [stateTransformation="JSONPATH:$[0][1]"]
+}
+
+Bridge openweathermap:weather-api:api "OpenWeatherMap Account" [apikey="<OMW_API_KEY>", refreshInterval=60, language="en", apiVersion="3.0"] {
+    Thing onecall local "Local weather and forecast" [location="<LATITUDE>,<LONGITUDE>", forecastHours=0, forecastDays=7]
+}
+
+Thing http:url:electricity-spot-price "Spot price in czk" @ "ČR" [
+	baseURL = "https://spotovaelektrina.cz/api/v1/price/get-actual-price-czk",
+	ignoreSSLErrors = "true",
+    refresh = 60,
+	stateMethod = "GET",
+    contentType = "application/json",
+    timeout = 3000
+] {
+	Channels:
+		Type number : priceczk
+}
+
+Thing http:url:electricity-price-24h-scale "Position of current hour in array ordered by price - 1 cheapest 24 most expensive." @ "ČR" [
+    baseURL="https://spotovaelektrina.cz/api/v1/price/get-actual-price-level-number",
+    ignoreSSLErrors = "true",
+    refresh = 60,
+	stateMethod = "GET",
+    contentType = "application/json",
+    timeout = 3000
+] {
+    Channels:
+        Type number : pricelevel
+}
