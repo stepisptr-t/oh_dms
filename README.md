@@ -1,6 +1,8 @@
 ### openHAB Demand Management System for PV powered homes
 This repository works as a template to be used as a starting point to run a self hosted demand management system for your own home.
 
+Currently the implementation is limited to Solax X3 G4 Solar Inverter, because that is the one I could test. Feel free to modify with your own version. 
+
 Before running the instance, explore the configuration located in `data/openhab/template/conf`. Specifically fimiliarize yourself with the contents of the file `home.items` which covers the basic home appliances which the author could test.
 
 The provided `docker-compose.yml` provides two other handy services. PostgreSQL database and MQTT broker. Both of these are widely used in home automation, so I thought of including them for you so you dont have to figure out how to set them up. They are prepared to be used by the openHAB container.
