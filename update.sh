@@ -4,6 +4,10 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
 
 sudo rm -rf ./data/openhab/conf/*
+
+# add execution rights using chmod +x ./data/openhab/template/conf/automation/jslib/update_lib.sh before running the script
+./data/openhab/template/conf/automation/jslib/update_lib.sh
+
 sudo cp -r ./data/openhab/template/conf ./data/openhab/
 sudo cp .env ./data/openhab/conf/things/
 

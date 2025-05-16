@@ -94,11 +94,7 @@ function categorizeSolarForecast(predictionItemName) {
 
   const absoluteMax = getItemAndValidate(Constants.PREDICTIONS.SOLAR.HIST_MAX_ITEM).numericState;
   
-  const solarThresholds = {
-    sunny: 0.7 * absoluteMax,
-    partlyCloudy: 0.4 * absoluteMax,
-    cloudy: 0.2 * absoluteMax,
-  };
+  const solarThresholds = Constants.PREDICTIONS.SOLAR.THRESHOLDS.apply(absoluteMax);
 
   logger.info("Solar max: {}, curent {}", absoluteMax, currentValue);
   logger.info("Solar threshold values: sunny: {}, partlyCloudy {}, cloudy {}", solarThresholds.sunny, solarThresholds.partlyCloudy, solarThresholds.cloudy);

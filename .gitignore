@@ -1,4 +1,5 @@
 node_modules
+.tgz
 *.jar
 data/openhab/userdata
 data/openhab/conf

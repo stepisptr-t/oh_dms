@@ -34,6 +34,13 @@ const Constants = {
             }
         },
         SOLAR: {
+            THRESHOLDS:(absMax) => {
+                return {
+                    sunny: 0.7 * absMax,
+                    partlyCloudy: 0.5 * absMax,
+                    cloudy: 0.3 * absMax,
+                }
+            },
             HIST_MAX_ITEM: "MovingHistoricalMaximum",
             TODAY:{
                 VALUE: 'Predicted_energy_today_value',
